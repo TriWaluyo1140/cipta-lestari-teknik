@@ -110,3 +110,5 @@ a.edit-muted:hover { color: var(--primary); }
 /* Ikon layanan: tombol kamera kecil */
 .card-icon > .edit-img-btn { left: auto; right: 2px; bottom: 2px; transform: none; width: 22px; height: 22px; padding: 0; font-size: 0; border-radius: 50%; display: grid; place-items: center; }
 .card-icon > .edit-img-btn::before { content: "📷"; font-size: .65rem; }
+.card-icon.has-img > .edit-img-btn { right: 8px; bottom: 8px; width: auto; height: auto; padding: 5px 10px; font-size: .72rem; border-radius: 999px; }
+.card-icon.has-img > .edit-img-btn::before { content: none; }
