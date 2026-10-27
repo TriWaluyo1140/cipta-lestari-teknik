@@ -142,66 +142,27 @@ window.SITE = {
     "title": "Tim Manajemen",
     "subtitle": "Orang-orang di balik perusahaan kami",
     "chart": {
-      "photo": "images/tim-1.jpg?v=mvqe2lif",
-      "name": "Raymond Budi Sumali",
-      "role": "Direktur Utama",
+      "photo": "images/tim-1.jpg?v=mvqexvpl",
+      "name": "Project Manager",
+      "role": "PM",
       "children": [
         {
           "photo": "images/tim-3.jpg",
           "name": "Tim Proyek",
           "role": "",
-          "children": [
-            {
-              "photo": "images/ayah-mvqcrmgt.jpg?v=mvqcs6tv",
-              "name": "Tri Waluyo",
-              "role": "",
-              "children": []
-            },
-            {
-              "photo": "images/screenshot-2026-10-27-at-15-02-51-mvqei19o.png?v=mvqei4d2",
-              "name": "Bonardo TS",
-              "role": "",
-              "children": []
-            },
-            {
-              "photo": "images/screenshot-2026-10-27-at-14-49-10-mvqdxk6j.png?v=mvqdxmue",
-              "name": "Harun Jonathan",
-              "role": "",
-              "children": []
-            }
-          ]
+          "children": []
         },
         {
           "photo": "",
           "name": "Teknisi",
           "role": "",
-          "children": [
-            {
-              "photo": "images/screenshot-2026-10-27-at-14-48-29-mvqdxsgp.png?v=mvqdxutx",
-              "name": "Agus Mulyono",
-              "role": "",
-              "children": []
-            },
-            {
-              "photo": "images/screenshot-2026-10-27-at-14-48-54-mvqdxyi7.png?v=mvqdy0a6",
-              "name": "Liliek Riyono",
-              "role": "",
-              "children": []
-            }
-          ]
+          "children": []
         },
         {
           "photo": "",
           "name": "Keuangan ",
           "role": "",
-          "children": [
-            {
-              "photo": "",
-              "name": "Meinar W",
-              "role": "",
-              "children": []
-            }
-          ]
+          "children": []
         }
       ]
     }
