@@ -55,12 +55,14 @@ window.SITE = {
       "Salam Sejahtera, PT. Cipta Lestari Teknik berdiri pada tahun 2012 pada bidang Komputer dan Suku Cadangnya, Piranti Lunak - Alat Telekmunikasi, Perlengkapan Elektronik - Alat Teknik / Mekanikal / Elektrikal / Alat Ukur / Alat Navigasi / Alat Survei / Keselamatan Kerja / Alat Transportasi Laut, Darat, Udara dan Suku Cadangnya - Tekstil / Pakaian Jadi / Perlengkapan TNI / Polri (Bukan Amunisi) - Alat Laboratorium / Kesehatan / Bahan Kimia. ",
       "Dengan berbekal pengalaman sejak tahun 2012 dan seiring dengan persaingan dibidang usaha, kami terus meningkatkan kinerja kami dengan tujuan untuk memberikan kepuasan pelanggan dalam menghadapi persaingan bisnis yang semakin kompetitif. Dengan ini kami PT. Cipta Lestari Teknik siap menjadi mitra kerja bagi lembaga / perusahaan anda"
     ],
-    "image": "images/about.jpg?v=mvqbt9mj",
     "vision": "Menjadi perusahaan yang unggul dalam bidang pemasok barang maupun peralatan yang dibutuhkan dalam pengembangan industri di indonesia serta mampu menghadapi persaingan global",
     "mission": [
       "Menjadi perusahaan yang terpercaya",
       "Mengutamakan kualitas dan pelayanan untuk mencapai kepuasan terhadap pelanggan",
       "Sebagai sarana dan prasarana dalam pengembangan kemampuan bagi karyawan"
+    ],
+    "images": [
+      "images/about.jpg?v=mvqbt9mj"
     ]
   },
   "services": {
@@ -90,10 +92,20 @@ window.SITE = {
     "items": [
       {
         "title": "ATS KRI Semarang",
-        "category": "Kategori",
+        "category": "Mabesal - diskomlekal",
         "images": [
           "images/proyek-1.jpg?v=mvqas7g6",
-          "images/screenshot-2026-10-27-at-13-03-41-mvqb0qmx.png?v=mvqb0tut"
+          "images/picture4-mvqcayem.jpg?v=mvqcb0ju",
+          "images/picture5-mvqcb0kd.jpg?v=mvqcb2k3"
+        ]
+      },
+      {
+        "title": "Pekerjaan Pemeliharaan Disaster Support Tactical Equipment Vehicle",
+        "category": "Basarnasi",
+        "images": [
+          "images/picture1-mvqca6a3.jpg?v=mvqca8lr",
+          "images/picture2-mvqca8na.jpg?v=mvqcaafn",
+          "images/picture3-mvqcaagj.jpg?v=mvqcaceo"
         ]
       },
       {
@@ -101,13 +113,6 @@ window.SITE = {
         "category": "Kategori",
         "images": [
           "images/proyek-2.jpg"
-        ]
-      },
-      {
-        "title": "Nama Proyek 3",
-        "category": "Kategori",
-        "images": [
-          "images/proyek-3.jpg"
         ]
       },
       {
