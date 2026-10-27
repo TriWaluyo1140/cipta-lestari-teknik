@@ -1,6 +1,8 @@
 /* =====================================================================
    KONTEN WEBSITE
    Cara termudah: buka website → klik "🔒 Admin" di footer → edit langsung.
+   Teks dua bahasa ditulis { "id": "…", "en": "…" }. Pilih ID/EN di menu atas
+   saat mode edit untuk mengubah versi bahasa tersebut.
    Foto ada di folder images/. Bagian dengan "hidden": true tidak ditampilkan.
    ===================================================================== */
 
@@ -9,24 +11,42 @@ window.SITE = {
     "name": "PT. CIPTA LESTARI TEKNIK",
     "shortName": "CLT",
     "logo": "images/logo.png",
-    "tagline": "Solusi terpercaya untuk bisnis Anda",
-    "description": "Deskripsi singkat perusahaan untuk Google & media sosial (maks. 160 karakter)."
+    "tagline": {
+      "id": "Solusi terpercaya untuk bisnis Anda",
+      "en": "Your trusted solution for your business"
+    },
+    "description": {
+      "id": "Deskripsi singkat perusahaan untuk Google & media sosial (maks. 160 karakter).",
+      "en": "Short company description for Google & social media (max. 160 characters)."
+    }
   },
   "theme": {
     "primary": "#FF7A00",
     "accent": "#FF9A3C"
   },
   "hero": {
-    "title": "Membangun Masa Depan Bersama Anda",
-    "subtitle": "Kami menyediakan layanan profesional dengan standar kualitas tinggi sejak tahun 2012.",
+    "title": {
+      "id": "Membangun Masa Depan Bersama Anda",
+      "en": "Building the Future Together With You"
+    },
+    "subtitle": {
+      "id": "Kami menyediakan layanan profesional dengan standar kualitas tinggi sejak tahun 2012.",
+      "en": "We have provided professional services with high quality standards since 2012."
+    },
     "image": "images/hero.jpg",
     "buttons": [
       {
-        "label": "Hubungi Kami",
+        "label": {
+          "id": "Hubungi Kami",
+          "en": "Contact Us"
+        },
         "href": "#kontak"
       },
       {
-        "label": "Lihat Layanan",
+        "label": {
+          "id": "Lihat Layanan",
+          "en": "View Services"
+        },
         "href": "#layanan"
       }
     ]
@@ -34,40 +54,79 @@ window.SITE = {
   "stats": [
     {
       "value": "20+",
-      "label": "Tahun Pengalaman"
+      "label": {
+        "id": "Tahun Pengalaman",
+        "en": "Years of Experience"
+      }
     },
     {
       "value": "350+",
-      "label": "Proyek Selesai"
+      "label": {
+        "id": "Proyek Selesai",
+        "en": "Projects Completed"
+      }
     },
     {
       "value": "120+",
-      "label": "Klien Puas"
+      "label": {
+        "id": "Klien Puas",
+        "en": "Satisfied Clients"
+      }
     },
     {
       "value": "15",
-      "label": "Kota Terlayani"
+      "label": {
+        "id": "Kota Terlayani",
+        "en": "Cities Served"
+      }
     }
   ],
   "about": {
-    "title": "Tentang Kami",
+    "title": {
+      "id": "Tentang Kami",
+      "en": "About Us"
+    },
     "paragraphs": [
-      "Salam Sejahtera, PT. Cipta Lestari Teknik berdiri pada tahun 2012 pada bidang Komputer dan Suku Cadangnya, Piranti Lunak - Alat Telekmunikasi, Perlengkapan Elektronik - Alat Teknik / Mekanikal / Elektrikal / Alat Ukur / Alat Navigasi / Alat Survei / Keselamatan Kerja / Alat Transportasi Laut, Darat, Udara dan Suku Cadangnya - Tekstil / Pakaian Jadi / Perlengkapan TNI / Polri (Bukan Amunisi) - Alat Laboratorium / Kesehatan / Bahan Kimia. ",
-      "Dengan berbekal pengalaman sejak tahun 2012 dan seiring dengan persaingan dibidang usaha, kami terus meningkatkan kinerja kami dengan tujuan untuk memberikan kepuasan pelanggan dalam menghadapi persaingan bisnis yang semakin kompetitif. Dengan ini kami PT. Cipta Lestari Teknik siap menjadi mitra kerja bagi lembaga / perusahaan anda"
+      {
+        "id": "Salam Sejahtera, PT. Cipta Lestari Teknik berdiri pada tahun 2012 pada bidang Komputer dan Suku Cadangnya, Piranti Lunak - Alat Telekmunikasi, Perlengkapan Elektronik - Alat Teknik / Mekanikal / Elektrikal / Alat Ukur / Alat Navigasi / Alat Survei / Keselamatan Kerja / Alat Transportasi Laut, Darat, Udara dan Suku Cadangnya - Tekstil / Pakaian Jadi / Perlengkapan TNI / Polri (Bukan Amunisi) - Alat Laboratorium / Kesehatan / Bahan Kimia. ",
+        "en": "Greetings. PT. Cipta Lestari Teknik was established in 2012, operating in Computers and Spare Parts, Software – Telecommunication Equipment, Electronic Equipment – Engineering / Mechanical / Electrical Equipment / Measuring Instruments / Navigation Equipment / Survey Equipment / Occupational Safety / Sea, Land and Air Transportation Equipment and Spare Parts – Textiles / Apparel / TNI / Polri Equipment (Non-Ammunition) – Laboratory / Medical Equipment / Chemicals."
+      },
+      {
+        "id": "Dengan berbekal pengalaman sejak tahun 2012 dan seiring dengan persaingan dibidang usaha, kami terus meningkatkan kinerja kami dengan tujuan untuk memberikan kepuasan pelanggan dalam menghadapi persaingan bisnis yang semakin kompetitif. Dengan ini kami PT. Cipta Lestari Teknik siap menjadi mitra kerja bagi lembaga / perusahaan anda",
+        "en": "Building on our experience since 2012 and keeping pace with competition in the industry, we continue to improve our performance to deliver customer satisfaction in an increasingly competitive business environment. PT. Cipta Lestari Teknik is ready to be a business partner for your institution / company."
+      }
     ],
-    "vision": "Menjadi perusahaan yang unggul dalam bidang pemasok barang maupun peralatan yang dibutuhkan dalam pengembangan industri di indonesia serta mampu menghadapi persaingan global",
+    "vision": {
+      "id": "Menjadi perusahaan yang unggul dalam bidang pemasok barang maupun peralatan yang dibutuhkan dalam pengembangan industri di indonesia serta mampu menghadapi persaingan global",
+      "en": "To become a leading supplier of the goods and equipment needed for industrial development in Indonesia, and to be able to compete globally"
+    },
     "mission": [
-      "Menjadi perusahaan yang terpercaya",
-      "Mengutamakan kualitas dan pelayanan untuk mencapai kepuasan terhadap pelanggan",
-      "Sebagai sarana dan prasarana dalam pengembangan kemampuan bagi karyawan"
+      {
+        "id": "Menjadi perusahaan yang terpercaya",
+        "en": "To be a trusted company"
+      },
+      {
+        "id": "Mengutamakan kualitas dan pelayanan untuk mencapai kepuasan terhadap pelanggan",
+        "en": "To put quality and service first in order to achieve customer satisfaction"
+      },
+      {
+        "id": "Sebagai sarana dan prasarana dalam pengembangan kemampuan bagi karyawan",
+        "en": "To serve as a means and foundation for developing our employees’ capabilities"
+      }
     ],
     "images": [
       "images/about.jpg?v=mvqbt9mj"
     ]
   },
   "services": {
-    "title": "Produk dan Jasa",
-    "subtitle": "Apa yang bisa kami bantu untuk Anda",
+    "title": {
+      "id": "Produk dan Jasa",
+      "en": "Products and Services"
+    },
+    "subtitle": {
+      "id": "Apa yang bisa kami bantu untuk Anda",
+      "en": "How we can help you"
+    },
     "items": [
       {
         "icon": "🏗️",
@@ -81,14 +140,26 @@ window.SITE = {
       },
       {
         "icon": "📦",
-        "title": "Layanan Tiga",
-        "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
+        "title": {
+          "id": "Layanan Tiga",
+          "en": "Service Three"
+        },
+        "text": {
+          "id": "Penjelasan singkat tentang layanan ini, 1–2 kalimat.",
+          "en": "A short description of this service, 1–2 sentences."
+        }
       }
     ]
   },
   "projects": {
-    "title": "Proyek & Galeri",
-    "subtitle": "Beberapa hasil kerja kami",
+    "title": {
+      "id": "Proyek & Galeri",
+      "en": "Projects & Gallery"
+    },
+    "subtitle": {
+      "id": "Beberapa hasil kerja kami",
+      "en": "Some of our work"
+    },
     "items": [
       {
         "title": "ATS KRI Semarang",
@@ -100,7 +171,10 @@ window.SITE = {
         ]
       },
       {
-        "title": "Pekerjaan Pemeliharaan Disaster Support Tactical Equipment Vehicle",
+        "title": {
+          "id": "Pekerjaan Pemeliharaan Disaster Support Tactical Equipment Vehicle",
+          "en": "Maintenance of Disaster Support Tactical Equipment Vehicles"
+        },
         "category": "Basarnasi",
         "images": [
           "images/picture1-mvqca6a3.jpg?v=mvqca8lr",
@@ -109,29 +183,53 @@ window.SITE = {
         ]
       },
       {
-        "title": "Nama Proyek 2",
-        "category": "Kategori",
+        "title": {
+          "id": "Nama Proyek 2",
+          "en": "Project Name 2"
+        },
+        "category": {
+          "id": "Kategori",
+          "en": "Category"
+        },
         "images": [
           "images/proyek-2.jpg"
         ]
       },
       {
-        "title": "Nama Proyek 4",
-        "category": "Kategori",
+        "title": {
+          "id": "Nama Proyek 4",
+          "en": "Project Name 4"
+        },
+        "category": {
+          "id": "Kategori",
+          "en": "Category"
+        },
         "images": [
           "images/proyek-4.jpg"
         ]
       },
       {
-        "title": "Nama Proyek 5",
-        "category": "Kategori",
+        "title": {
+          "id": "Nama Proyek 5",
+          "en": "Project Name 5"
+        },
+        "category": {
+          "id": "Kategori",
+          "en": "Category"
+        },
         "images": [
           "images/proyek-5.jpg"
         ]
       },
       {
-        "title": "Nama Proyek 6",
-        "category": "Kategori",
+        "title": {
+          "id": "Nama Proyek 6",
+          "en": "Project Name 6"
+        },
+        "category": {
+          "id": "Kategori",
+          "en": "Category"
+        },
         "images": [
           "images/proyek-6.jpg"
         ]
@@ -139,7 +237,10 @@ window.SITE = {
     ]
   },
   "team": {
-    "title": "Tim Manajemen",
+    "title": {
+      "id": "Tim Manajemen",
+      "en": "Management Team"
+    },
     "subtitle": "*****",
     "chart": {
       "photo": "images/tim-1.jpg?v=mvqexvpl",
@@ -148,19 +249,28 @@ window.SITE = {
       "children": [
         {
           "photo": "images/tim-3.jpg",
-          "name": "Tim Proyek",
+          "name": {
+            "id": "Tim Proyek",
+            "en": "Project Team"
+          },
           "role": "",
           "children": []
         },
         {
           "photo": "",
-          "name": "Teknisi",
+          "name": {
+            "id": "Teknisi",
+            "en": "Technicians"
+          },
           "role": "",
           "children": []
         },
         {
           "photo": "",
-          "name": "Keuangan ",
+          "name": {
+            "id": "Keuangan",
+            "en": "Finance"
+          },
           "role": "",
           "children": []
         }
@@ -168,7 +278,10 @@ window.SITE = {
     }
   },
   "clients": {
-    "title": "Dipercaya Oleh",
+    "title": {
+      "id": "Dipercaya Oleh",
+      "en": "Trusted By"
+    },
     "logos": [
       {
         "image": "images/klien-1.png",
@@ -194,34 +307,64 @@ window.SITE = {
     "hidden": true
   },
   "testimonials": {
-    "title": "Apa Kata Klien",
+    "title": {
+      "id": "Apa Kata Klien",
+      "en": "What Our Clients Say"
+    },
     "items": [
       {
-        "quote": "Tuliskan testimoni klien di sini. Pelayanan cepat dan hasil memuaskan.",
-        "name": "Nama Klien",
+        "quote": {
+          "id": "Tuliskan testimoni klien di sini. Pelayanan cepat dan hasil memuaskan.",
+          "en": "Write a client testimonial here. Fast service and satisfying results."
+        },
+        "name": {
+          "id": "Nama Klien",
+          "en": "Client Name"
+        },
         "company": "PT Contoh Satu"
       },
       {
-        "quote": "Testimoni kedua. Tim yang profesional dan komunikatif.",
-        "name": "Nama Klien",
+        "quote": {
+          "id": "Testimoni kedua. Tim yang profesional dan komunikatif.",
+          "en": "Second testimonial. A professional and communicative team."
+        },
+        "name": {
+          "id": "Nama Klien",
+          "en": "Client Name"
+        },
         "company": "PT Contoh Dua"
       },
       {
-        "quote": "Testimoni ketiga. Sangat direkomendasikan.",
-        "name": "Nama Klien",
+        "quote": {
+          "id": "Testimoni ketiga. Sangat direkomendasikan.",
+          "en": "Third testimonial. Highly recommended."
+        },
+        "name": {
+          "id": "Nama Klien",
+          "en": "Client Name"
+        },
         "company": "CV Contoh Tiga"
       }
     ],
     "hidden": true
   },
   "contact": {
-    "title": "Hubungi Kami",
-    "subtitle": "Konsultasikan kebutuhan Anda, gratis.",
+    "title": {
+      "id": "Hubungi Kami",
+      "en": "Contact Us"
+    },
+    "subtitle": {
+      "id": "Konsultasikan kebutuhan Anda, gratis.",
+      "en": "Consult your needs with us, free of charge."
+    },
     "address": "The Mansion At Dukuh Golf Kemayoran Blok Bougenville BF-11 F2, Jl. Trembesi Blok D Bandar Baru Jakarta Utara 14410",
     "phone": "+62 21 22606445 ",
     "email": "pt.clteknik@gmail.com  ",
     "whatsapp": "628999905602",
-    "hours": "Senin – Jumat, 08.30– 17.00 WIB",
+    "hours": {
+      "id": "Senin – Jumat, 08.30– 17.00 WIB",
+      "en": "Monday – Friday, 08.30 – 17.00 WIB"
+    },
     "mapEmbed": "https://www.google.com/maps?q=Monas+Jakarta&output=embed"
   },
   "social": [
@@ -241,5 +384,33 @@ window.SITE = {
       "name": "YouTube",
       "url": "https://youtube.com/"
     }
-  ]
+  ],
+  "customers": {
+    "title": {
+      "id": "Pelanggan Kami",
+      "en": "Our Clients"
+    },
+    "subtitle": {
+      "id": "Perusahaan dan instansi yang telah mempercayakan kebutuhannya kepada kami",
+      "en": "Companies and institutions that have trusted us with their needs"
+    },
+    "items": [
+      {
+        "logo": "",
+        "name": "Nama Pelanggan"
+      },
+      {
+        "logo": "",
+        "name": "Nama Pelanggan"
+      },
+      {
+        "logo": "",
+        "name": "Nama Pelanggan"
+      },
+      {
+        "logo": "",
+        "name": "Nama Pelanggan"
+      }
+    ]
+  }
 };
