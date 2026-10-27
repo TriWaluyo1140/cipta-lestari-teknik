@@ -64,7 +64,7 @@ window.SITE = {
     ]
   },
   "services": {
-    "title": "Layanan Kami",
+    "title": "Produk dan Jasa",
     "subtitle": "Apa yang bisa kami bantu untuk Anda",
     "items": [
       {
