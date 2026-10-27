@@ -149,7 +149,7 @@ window.SITE = {
         {
           "photo": "images/tim-3.jpg",
           "name": "Tim Proyek",
-          "role": "Direktur Keuangan",
+          "role": "",
           "children": [
             {
               "photo": "images/ayah-mvqcrmgt.jpg?v=mvqcs6tv",
@@ -174,7 +174,7 @@ window.SITE = {
         {
           "photo": "",
           "name": "Teknisi",
-          "role": "Jabatan",
+          "role": "",
           "children": [
             {
               "photo": "",
@@ -193,7 +193,7 @@ window.SITE = {
         {
           "photo": "",
           "name": "Keuangan ",
-          "role": "Jabatan",
+          "role": "",
           "children": [
             {
               "photo": "",
