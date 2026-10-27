@@ -105,7 +105,7 @@ window.SITE = {
     "items": [
       {
         "image": "images/proyek-1.jpg?v=mvqa5owt",
-        "title": "Nama Proyek 1",
+        "title": "ATS KRI Semarang",
         "category": "Kategori"
       },
       {
