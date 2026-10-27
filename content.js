@@ -241,7 +241,7 @@ window.SITE = {
     },
     "subtitle": "*****",
     "chart": {
-      "photo": "images/tim-1.jpg?v=mvqexvpl",
+      "photo": "images/tim-1.jpg?v=mvqgxumj",
       "name": "Project Manager",
       "role": "PM",
       "children": [
