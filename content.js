@@ -140,7 +140,7 @@ window.SITE = {
   },
   "team": {
     "title": "Tim Manajemen",
-    "subtitle": "Orang-orang di balik perusahaan kami",
+    "subtitle": "*****",
     "chart": {
       "photo": "images/tim-1.jpg?v=mvqexvpl",
       "name": "Project Manager",
