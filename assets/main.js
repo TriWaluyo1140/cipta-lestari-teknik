@@ -41,6 +41,10 @@
 
   // Menyesuaikan format konten lama: 1 foto proyek → daftar foto, daftar tim → struktur organisasi
   function normalize(S) {
+    if (S.about && !Array.isArray(S.about.images)) {
+      S.about.images = S.about.image ? [S.about.image] : [];
+      delete S.about.image;
+    }
     (S.projects?.items || []).forEach((it) => {
       if (!Array.isArray(it.images)) it.images = it.image ? [it.image] : [];
       delete it.image;
@@ -58,13 +62,21 @@
   const banner = (key, titlePath = `${key}.title`, subPath = `${key}.subtitle`) => `
     <section class="page-banner"${secAttr(key)}>
       <div class="container">
-        <p class="eyebrow">${esc(window.SITE.company?.name)}</p>
         ${T(titlePath, "h1")}
         ${get(subPath) != null ? T(subPath, "p", "lead") : ""}
       </div>
     </section>`;
 
   const more = (href, label) => `<div class="more reveal"><a class="btn btn-outline" href="${href}">${label} →</a></div>`;
+
+  // Kumpulan foto yang berganti otomatis (dipakai Proyek & Tentang Kami)
+  const slidesHTML = (listPath, cls = "") => {
+    const photos = get(listPath) || [];
+    return `<div class="slides ${cls}" data-photos="${listPath}">
+      ${(photos.length ? photos : [""]).map((_, j) => `<div class="slide${j ? "" : " active"}">${img(`${listPath}.${j}`, "", "", false)}</div>`).join("")}
+      ${photos.length > 1 ? `<span class="photo-count">📷 ${photos.length}</span><div class="dots">${photos.map((_, j) => `<i${j ? "" : ' class="on"'}></i>`).join("")}</div>` : ""}
+    </div>`;
+  };
 
   const serviceCards = (limit) => {
     const items = (window.SITE.services.items || []).slice(0, limit || undefined);
@@ -76,11 +88,8 @@
   const projectCards = (limit) => {
     const items = (window.SITE.projects.items || []).slice(0, limit || undefined);
     return `<div class="grid gallery"${limit ? "" : ' data-list="projects.items"'}>${items.map((it, i) => `
-      <figure class="gallery-item reveal" data-item="projects.items.${i}" data-index="${i}">
-        <div class="slides" data-photos="projects.items.${i}.images">
-          ${(it.images.length ? it.images : [""]).map((_, j) => `<div class="slide${j ? "" : " active"}">${img(`projects.items.${i}.images.${j}`, it.title, "", false)}</div>`).join("")}
-          ${it.images.length > 1 ? `<span class="photo-count">📷 ${it.images.length}</span><div class="dots">${it.images.map((_, j) => `<i${j ? "" : ' class="on"'}></i>`).join("")}</div>` : ""}
-        </div>
+      <figure class="gallery-item reveal" data-item="projects.items.${i}" data-lightbox data-title="${esc(it.title)}">
+        ${slidesHTML(`projects.items.${i}.images`)}
         <figcaption>${T(`projects.items.${i}.category`)}${T(`projects.items.${i}.title`, "strong")}</figcaption>
       </figure>`).join("")}
     </div>`;
@@ -162,11 +171,13 @@
       return `${banner("about", "about.title", "about.subtitle")}
         <section class="section">
           <div class="container about">
-            <div class="reveal">${img("about.image", a.title, "about-img")}</div>
-            <div class="reveal">
+            <div class="reveal about-media" data-lightbox data-title="${esc(a.title)}">${slidesHTML("about.images", "about-slides")}</div>
+            <div class="reveal about-text">
               <div data-list="about.paragraphs">${(a.paragraphs || []).map((_, i) => `<div data-item="about.paragraphs.${i}">${T(`about.paragraphs.${i}`, "p")}</div>`).join("")}</div>
-              ${a.vision != null ? `<div class="vm"><h3>Visi</h3>${T("about.vision", "p")}</div>` : ""}
-              ${a.mission ? `<div class="vm"><h3>Misi</h3><ul data-list="about.mission">${a.mission.map((_, i) => `<li data-item="about.mission.${i}">${T(`about.mission.${i}`)}</li>`).join("")}</ul></div>` : ""}
+              <div class="vm-row">
+                ${a.vision != null ? `<div class="vm"><h3>Visi</h3>${T("about.vision", "p")}</div>` : ""}
+                ${a.mission ? `<div class="vm"><h3>Misi</h3><ul data-list="about.mission">${a.mission.map((_, i) => `<li data-item="about.mission.${i}">${T(`about.mission.${i}`)}</li>`).join("")}</ul></div>` : ""}
+              </div>
             </div>
           </div>
         </section>`;
@@ -189,15 +200,17 @@
         ["💬", "WhatsApp", "whatsapp", ed ? T("contact.whatsapp") : `<a href="${wa}" target="_blank" rel="noopener">Chat sekarang</a>`],
         ["🕘", "Jam Operasional", "hours", T("contact.hours")],
       ].filter((r) => (ed ? k[r[2]] != null : k[r[2]]));
+      // Peta mengikuti alamat; link "Sematkan peta" dari Google Maps (…/maps/embed…) dipakai bila diisi
+      const map = /\/maps\/embed/.test(k.mapEmbed || "") ? k.mapEmbed
+        : k.address ? `https://www.google.com/maps?q=${encodeURIComponent(k.address)}&output=embed` : "";
       return `${banner("contact")}
         <section class="section">
           <div class="container">
             <div class="contact">
               <div class="contact-info reveal">
                 ${rows.map((r) => `<div class="contact-row"><span class="ci">${r[0]}</span><div><small>${r[1]}</small><p>${r[3]}</p></div></div>`).join("")}
-                ${wa ? `<a class="btn" href="${wa}" target="_blank" rel="noopener">Kirim Pesan via WhatsApp</a>` : ""}
               </div>
-              ${k.mapEmbed ? `<div class="map reveal"><iframe src="${esc(k.mapEmbed)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi kantor"></iframe></div>` : ""}
+              ${map ? `<div class="map reveal"><iframe src="${esc(map)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi kantor"></iframe></div>` : ""}
             </div>
           </div>
         </section>`;
@@ -250,13 +263,13 @@
     /* ---------- Animasi muncul saat scroll ---------- */
     document.querySelectorAll(".reveal").forEach((el) => (editing() ? el.classList.add("in") : io.observe(el)));
 
-    /* ---------- Galeri: klik untuk lihat semua foto proyek ---------- */
-    document.querySelectorAll(".gallery-item").forEach((g) => g.addEventListener("click", () => {
+    /* ---------- Klik foto untuk melihat semua foto (Proyek & Tentang Kami) ---------- */
+    document.querySelectorAll("[data-lightbox]").forEach((g) => g.addEventListener("click", () => {
       if (editing()) return;
       const srcs = [...g.querySelectorAll(".slide .img:not(.missing) img")].map((im) => im.src);
       if (!srcs.length) return;
       const shown = [...g.querySelectorAll(".slide")].findIndex((s) => s.classList.contains("active"));
-      openLightbox(srcs, Math.max(0, Math.min(shown, srcs.length - 1)), S.projects.items[g.dataset.index]?.title || "");
+      openLightbox(srcs, Math.max(0, Math.min(shown, srcs.length - 1)), g.dataset.title || "");
     }));
 
     startSlides();

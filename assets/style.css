@@ -80,13 +80,21 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .grid { display: grid; gap: 24px; }
 
 /* ---------- Tentang ---------- */
-.about { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-.about-img { aspect-ratio: 4 / 3; border-radius: var(--radius); box-shadow: var(--shadow); }
+.about { display: grid; grid-template-columns: 1fr 2fr; gap: 36px; align-items: start; }
+.about-media { position: sticky; top: 96px; cursor: zoom-in; }
+.about-slides { border-radius: var(--radius); box-shadow: var(--shadow); }
 .about p { color: var(--muted); margin-top: 18px; }
 .vm { margin-top: 24px; padding: 18px 22px; border-left: 4px solid var(--primary); background: var(--bg-alt); border-radius: 0 12px 12px 0; }
 .vm h3 { font-size: 1rem; color: var(--primary); }
 .vm p { margin-top: 4px; }
 .vm ul { margin: 6px 0 0 18px; color: var(--muted); }
+/* Halaman Tentang dibuat ringkas agar teks muat satu layar */
+.about-text p { font-size: .87rem; line-height: 1.5; margin-top: 8px; text-align: justify; }
+.about-text > [data-list] > :first-child p { margin-top: 0; }
+.vm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.vm-row .vm { margin-top: 0; padding: 10px 14px; }
+.vm-row .vm h3 { font-size: .9rem; }
+.vm-row .vm p, .vm-row .vm li { font-size: .8rem; line-height: 1.45; text-align: left; margin-top: 2px; }
 
 /* ---------- Layanan ---------- */
 .cards { grid-template-columns: repeat(3, 1fr); }
@@ -200,7 +208,8 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 /* ---------- Responsif ---------- */
 @media (max-width: 960px) {
   .cards, .gallery, .quotes { grid-template-columns: repeat(2, 1fr); }
-  .about, .contact { grid-template-columns: 1fr; gap: 40px; }
+  .about, .contact { grid-template-columns: 1fr; gap: 32px; }
+  .about-media { position: static; max-width: 520px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(3) { border-left: 0; }
   .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -213,6 +222,7 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
   .section { padding: 72px 0; }
 }
 @media (max-width: 560px) {
+  .vm-row { grid-template-columns: 1fr; }
   .cards, .gallery, .quotes { grid-template-columns: 1fr; }
   .stat strong { font-size: 1.6rem; }
   .logo-item { width: 110px; }
@@ -225,10 +235,18 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 
 /* ---------- Halaman per menu ---------- */
 .nav-links a.active { color: var(--primary) !important; }
-.page-banner { position: relative; padding: 150px 0 72px; text-align: center; background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--primary) 28%, transparent), transparent 65%), var(--bg-alt); border-bottom: 1px solid var(--line); }
-.page-banner h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; font-weight: 800; letter-spacing: -.02em; }
-.page-banner h1::after { content: ""; display: block; width: 56px; height: 4px; border-radius: 4px; background: var(--primary); margin: 18px auto 0; }
-.page-banner .lead { color: var(--muted); margin: 16px auto 0; max-width: 620px; }
+.page-banner { position: relative; padding: 94px 0 22px; text-align: center; background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 70%), var(--bg-alt); border-bottom: 1px solid var(--line); }
+.page-banner h1 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); line-height: 1.2; font-weight: 800; letter-spacing: -.01em; }
+.page-banner h1::after { content: ""; display: block; width: 40px; height: 3px; border-radius: 3px; background: var(--primary); margin: 10px auto 0; }
+.page-banner .lead { color: var(--muted); margin: 8px auto 0; max-width: 620px; font-size: .95rem; }
+/* Isi halaman selain Beranda dibuat ringkas agar muat satu layar */
+body:not([data-page="beranda"]) .section { padding: 28px 0 56px; }
+body[data-page="kontak"] .contact-info { gap: 12px; }
+body[data-page="kontak"] .contact { gap: 32px; }
+body[data-page="kontak"] .contact-row small { font-size: .68rem; }
+body[data-page="kontak"] .contact-row p { font-size: .92rem; line-height: 1.45; }
+body[data-page="kontak"] .ci { width: 40px; height: 40px; font-size: 1.05rem; }
+body[data-page="kontak"] .map, body[data-page="kontak"] .map iframe { min-height: 300px; }
 .hero-spacer { height: 120px; }
 .more { text-align: center; margin-top: 40px; }
 .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
@@ -237,6 +255,6 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .cta h2::after { display: none; }
 .cta p { color: var(--muted); margin-top: 8px; }
 @media (max-width: 560px) {
-  .page-banner { padding: 120px 0 52px; }
+  .page-banner { padding: 92px 0 22px; }
   .cta { padding: 28px 24px; }
 }
