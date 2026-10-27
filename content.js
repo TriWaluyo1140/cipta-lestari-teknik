@@ -152,7 +152,7 @@ window.SITE = {
           "role": "Direktur Keuangan",
           "children": [
             {
-              "photo": "",
+              "photo": "images/ayah-mvqcrmgt.jpg?v=mvqcs6tv",
               "name": "Tri Waluyo",
               "role": "",
               "children": []
