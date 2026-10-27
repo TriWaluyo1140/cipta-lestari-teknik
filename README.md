@@ -40,6 +40,8 @@ Buka `https://alamat-website-anda/admin.html`. Halaman ini **terkunci**: hanya b
 - **Klik teks mana saja** (judul, nama tim, layanan, alamat, dll.) lalu ketik langsung.
 - **📷 Ganti foto** pada setiap foto untuk upload (otomatis diperkecil maks. 1920px).
 - **+ Tambah**, **◀ ▶** (geser urutan), **✕** (hapus) untuk layanan, proyek, tim, klien, testimoni.
+- **Galeri proyek**: di bawah foto tiap proyek ada deretan foto kecil → **📷 Tambah foto** (bisa pilih banyak sekaligus), **◀** ubah urutan, **✕** hapus. Di website, foto berganti otomatis; klik untuk melihat semua foto.
+- **Struktur organisasi**: klik nama/jabatan untuk mengubah, **📷 Ganti foto** untuk foto, **+ Bawahan** untuk menambah orang di bawahnya, **◀ ▶ ✕** untuk geser/hapus.
 - Saklar **Tampil** di pojok kiri tiap bagian untuk menyembunyikan/menampilkan bagian.
 - Klik **Simpan** di bilah bawah (atau Ctrl/⌘+S). Pengunjung melihat perubahan dalam ±1 menit.
 - **⚙️ Pengaturan** membuka `admin.html` untuk hal yang tidak terlihat di halaman: logo, warna, link tombol, media sosial, nomor WhatsApp, peta.

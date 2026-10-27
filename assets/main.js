@@ -10,10 +10,11 @@
   const T = (path, tag = "span", cls = "") => `<${tag}${cls ? ` class="${cls}"` : ""} data-edit="${path}">${esc(get(path))}</${tag}>`;
 
   // Gambar; yang belum diupload diganti kotak petunjuk berisi nama file
-  const img = (path, alt, cls = "") => {
+  const shownSrc = (src) => window.GH?.previews[src] || src;
+  const img = (path, alt, cls = "", editable = true) => {
     const src = get(path) || "";
-    const shown = window.GH?.previews[src] || src;
-    return `<div class="img ${cls}${src ? "" : " missing"}" data-img="${path}">${src ? `<img src="${esc(shown)}" alt="${esc(alt)}" loading="lazy" onerror="this.parentNode.classList.add('missing')">` : ""}<span class="img-hint">Upload foto${src ? `:<br><code>${esc(src.split("?")[0])}</code>` : ""}</span></div>`;
+    const shown = shownSrc(src);
+    return `<div class="img ${cls}${src ? "" : " missing"}"${editable ? ` data-img="${path}"` : ""}>${src ? `<img src="${esc(shown)}" alt="${esc(alt)}" loading="lazy" onerror="this.parentNode.classList.add('missing')">` : ""}<span class="img-hint">Upload foto${src ? `:<br><code>${esc(src.split("?")[0])}</code>` : ""}</span></div>`;
   };
 
   const head = (key, withSub = true) => `<div class="section-head reveal">${T(`${key}.title`, "h2")}${withSub && get(`${key}.subtitle`) != null ? T(`${key}.subtitle`, "p") : ""}</div>`;
@@ -22,8 +23,32 @@
   const on = (k) => { const v = window.SITE?.[k]; return v && (v.hidden !== true || editing()); };
   const secAttr = (k) => ` data-section="${k}"${window.SITE[k]?.hidden ? ' data-hidden="1"' : ""}`;
 
+  // Menyesuaikan format konten lama: 1 foto proyek → daftar foto, daftar tim → struktur organisasi
+  function normalize(S) {
+    (S.projects?.items || []).forEach((it) => {
+      if (!Array.isArray(it.images)) it.images = it.image ? [it.image] : [];
+      delete it.image;
+    });
+    const t = S.team;
+    if (t && !t.chart) {
+      const [root, ...rest] = t.items || [];
+      t.chart = { photo: "", name: "Nama Lengkap", role: "Direktur Utama", ...root, children: rest.map((m) => ({ ...m, children: [] })) };
+      delete t.items;
+    }
+  }
+
+  // Satu kotak di bagan organisasi (beserta bawahannya)
+  const orgNode = (node, p, isRoot) => `
+    <li>
+      <div class="org-node reveal"${isRoot ? "" : ` data-item="${p}"`} data-children="${p}.children">
+        ${img(`${p}.photo`, node.name, "org-photo")}${T(`${p}.name`, "h3")}${T(`${p}.role`, "p")}
+      </div>
+      ${node.children?.length ? `<ul>${node.children.map((ch, i) => orgNode(ch, `${p}.children.${i}`)).join("")}</ul>` : ""}
+    </li>`;
+
   function render() {
     const S = window.SITE || {};
+    normalize(S);
     const c = S.company || {};
 
     /* ---------- Tema & meta ---------- */
@@ -95,8 +120,11 @@
           <div class="container">
             ${head("projects")}
             <div class="grid gallery" data-list="projects.items">${(S.projects.items || []).map((it, i) => `
-              <figure class="gallery-item reveal" data-item="projects.items.${i}" data-title="${esc(it.title)}">
-                ${img(`projects.items.${i}.image`, it.title)}
+              <figure class="gallery-item reveal" data-item="projects.items.${i}" data-index="${i}">
+                <div class="slides" data-photos="projects.items.${i}.images">
+                  ${(it.images.length ? it.images : [""]).map((_, j) => `<div class="slide${j ? "" : " active"}">${img(`projects.items.${i}.images.${j}`, it.title, "", false)}</div>`).join("")}
+                  ${it.images.length > 1 ? `<span class="photo-count">📷 ${it.images.length}</span><div class="dots">${it.images.map((_, j) => `<i${j ? "" : ' class="on"'}></i>`).join("")}</div>` : ""}
+                </div>
                 <figcaption>${T(`projects.items.${i}.category`)}${T(`projects.items.${i}.title`, "strong")}</figcaption>
               </figure>`).join("")}
             </div>
@@ -109,9 +137,7 @@
         <section id="tim" class="section alt"${secAttr("team")}>
           <div class="container">
             ${head("team")}
-            <div class="grid team" data-list="team.items">${(S.team.items || []).map((m, i) => `
-              <div class="member reveal" data-item="team.items.${i}">${img(`team.items.${i}.photo`, m.name, "member-img")}${T(`team.items.${i}.name`, "h3")}${T(`team.items.${i}.role`, "p")}</div>`).join("")}
-            </div>
+            <div class="org-wrap"><ul class="org-tree">${orgNode(S.team.chart, "team.chart", true)}</ul></div>
           </div>
         </section>`);
     }
@@ -184,15 +210,43 @@
     /* ---------- Animasi muncul saat scroll ---------- */
     document.querySelectorAll(".reveal").forEach((el) => (editing() ? el.classList.add("in") : io.observe(el)));
 
-    /* ---------- Lightbox galeri ---------- */
+    /* ---------- Galeri: klik untuk lihat semua foto proyek ---------- */
     document.querySelectorAll(".gallery-item").forEach((g) => g.addEventListener("click", () => {
-      if (editing() || g.querySelector(".img.missing")) return;
-      lb.querySelector("img").src = g.querySelector("img").src;
-      lb.querySelector(".lightbox-caption").textContent = g.dataset.title;
-      lb.hidden = false;
+      if (editing()) return;
+      const srcs = [...g.querySelectorAll(".slide .img:not(.missing) img")].map((im) => im.src);
+      if (!srcs.length) return;
+      const shown = [...g.querySelectorAll(".slide")].findIndex((s) => s.classList.contains("active"));
+      openLightbox(srcs, Math.max(0, Math.min(shown, srcs.length - 1)), S.projects.items[g.dataset.index]?.title || "");
     }));
 
+    startSlides();
     document.dispatchEvent(new Event("site:rendered"));
+  }
+
+  /* ---------- Slideshow foto proyek (berganti otomatis) ---------- */
+  let slideTimers = [];
+  function startSlides() {
+    slideTimers.forEach((t) => { clearTimeout(t); clearInterval(t); });
+    slideTimers = [];
+    if (editing() || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.querySelectorAll(".slides").forEach((box, k) => {
+      const slides = [...box.querySelectorAll(".slide")];
+      const dots = [...box.querySelectorAll(".dots i")];
+      if (slides.length < 2) return;
+      let i = 0;
+      const step = () => {
+        for (let n = 1; n < slides.length; n++) {
+          const j = (i + n) % slides.length;
+          if (slides[j].querySelector(".img.missing")) continue;
+          slides[i].classList.remove("active"); dots[i]?.classList.remove("on");
+          i = j;
+          slides[i].classList.add("active"); dots[i]?.classList.add("on");
+          return;
+        }
+      };
+      // Mulai bergiliran agar foto tidak berganti serempak
+      slideTimers.push(setTimeout(() => slideTimers.push(setInterval(step, 3500)), 1200 + k * 600));
+    });
   }
 
   /* ---------- Bagian yang cukup dipasang sekali ---------- */
@@ -205,9 +259,39 @@
 
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 });
 
+  /* ---------- Lightbox dengan tombol sebelumnya / berikutnya ---------- */
   const lb = document.getElementById("lightbox");
-  lb.addEventListener("click", (e) => { if (e.target !== lb.querySelector("img")) lb.hidden = true; });
-  addEventListener("keydown", (e) => { if (e.key === "Escape") lb.hidden = true; });
+  let lbPhotos = [], lbIdx = 0, lbTitle = "";
+  function openLightbox(srcs, idx, title) {
+    lbPhotos = srcs; lbIdx = idx; lbTitle = title;
+    showLightbox();
+    lb.hidden = false;
+  }
+  function showLightbox() {
+    const n = lbPhotos.length;
+    lb.querySelector("img").src = lbPhotos[lbIdx];
+    lb.querySelector(".lightbox-caption").textContent = n > 1 ? `${lbTitle} · ${lbIdx + 1} / ${n}` : lbTitle;
+    lb.querySelectorAll(".lb-nav").forEach((b) => (b.hidden = n < 2));
+  }
+  const lbGo = (d) => { lbIdx = (lbIdx + d + lbPhotos.length) % lbPhotos.length; showLightbox(); };
+  lb.addEventListener("click", (e) => {
+    if (e.target.closest(".lb-prev")) return lbGo(-1);
+    if (e.target.closest(".lb-next")) return lbGo(1);
+    if (e.target !== lb.querySelector("img")) lb.hidden = true;
+  });
+  addEventListener("keydown", (e) => {
+    if (lb.hidden) return;
+    if (e.key === "Escape") lb.hidden = true;
+    if (e.key === "ArrowLeft") lbGo(-1);
+    if (e.key === "ArrowRight") lbGo(1);
+  });
+  let touchX = null;
+  lb.addEventListener("touchstart", (e) => (touchX = e.touches[0].clientX), { passive: true });
+  lb.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - (touchX ?? 0);
+    if (Math.abs(dx) > 40 && lbPhotos.length > 1) lbGo(dx < 0 ? 1 : -1);
+    touchX = null;
+  });
 
   window.renderSite = render;
   render();

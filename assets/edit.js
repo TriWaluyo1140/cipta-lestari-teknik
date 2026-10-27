@@ -11,8 +11,7 @@
     "about.paragraphs": "Paragraf baru.",
     "about.mission": "Misi baru.",
     "services.items": { icon: "⭐", title: "Layanan Baru", text: "Keterangan singkat layanan." },
-    "projects.items": { image: "", title: "Proyek Baru", category: "Kategori" },
-    "team.items": { photo: "", name: "Nama Lengkap", role: "Jabatan" },
+    "projects.items": { images: [], title: "Proyek Baru", category: "Kategori" },
     "clients.logos": { image: "", name: "Klien" },
     "testimonials.items": { quote: "Isi testimoni.", name: "Nama Klien", company: "Perusahaan" },
   };
@@ -203,11 +202,56 @@
         const arr = getPath(path);
         const last = arr[arr.length - 1];
         const tpl = TEMPLATES[path] ?? (last && typeof last === "object" ? Object.fromEntries(Object.keys(last).map((k) => [k, ""])) : "");
-        arr.push(typeof tpl === "object" ? { ...tpl } : tpl);
+        arr.push(typeof tpl === "object" ? structuredClone(tpl) : tpl);
         setDirty(true);
         rerender();
       };
       list.insertAdjacentElement("afterend", btn);
+    });
+
+    // Galeri proyek: daftar foto kecil + tambah banyak foto sekaligus
+    document.querySelectorAll("[data-photos]").forEach((box) => {
+      const path = box.dataset.photos;
+      const arr = getPath(path) || [];
+      const strip = make("div", "edit-ui edit-photos");
+      arr.forEach((src, j) => {
+        const t = make("div", "edit-thumb");
+        const im = document.createElement("img");
+        im.src = GH.previews[src] || src;
+        im.onerror = () => (im.style.visibility = "hidden");
+        t.appendChild(im);
+        const tool = (txt, title, fn, cls = "") => {
+          const b = make("button", cls, txt);
+          b.type = "button";
+          b.title = title;
+          b.onclick = (e) => { e.preventDefault(); e.stopPropagation(); if (fn() !== false) { setDirty(true); rerender(); } };
+          t.appendChild(b);
+        };
+        if (j > 0) tool("◀", "Jadikan lebih awal", () => arr.splice(j - 1, 0, arr.splice(j, 1)[0]), "mv");
+        tool("✕", "Hapus foto ini", () => (confirm("Hapus foto ini dari proyek?") ? arr.splice(j, 1) : false), "del");
+        strip.appendChild(t);
+      });
+      const add = make("button", "edit-thumb edit-thumb-add", "📷 Tambah foto");
+      add.type = "button";
+      add.title = "Bisa pilih banyak foto sekaligus";
+      add.onclick = (e) => { e.preventDefault(); e.stopPropagation(); pickImages(path, add); };
+      strip.appendChild(add);
+      box.insertAdjacentElement("afterend", strip);
+    });
+
+    // Struktur organisasi: tambah bawahan di bawah setiap kotak
+    document.querySelectorAll("[data-children]").forEach((node) => {
+      const b = make("button", "edit-ui edit-add-child", "+ Bawahan");
+      b.type = "button";
+      b.onclick = (e) => {
+        e.preventDefault();
+        const p = node.dataset.children;
+        if (!Array.isArray(getPath(p))) setPath(p, []);
+        getPath(p).push({ photo: "", name: "Nama Lengkap", role: "Jabatan", children: [] });
+        setDirty(true);
+        rerender();
+      };
+      node.appendChild(b);
     });
 
     document.querySelectorAll("[data-section]").forEach((sec) => {
@@ -242,6 +286,30 @@
         btn.disabled = false;
         btn.textContent = "📷 Ganti foto";
       }
+    };
+    input.click();
+  }
+
+  function pickImages(path, btn) {
+    const input = Object.assign(document.createElement("input"), { type: "file", accept: "image/*", multiple: true });
+    input.onchange = async () => {
+      const files = [...input.files];
+      if (!files.length) return;
+      if (!Array.isArray(getPath(path))) setPath(path, []);
+      btn.disabled = true;
+      let done = 0;
+      try {
+        for (const file of files) {
+          btn.textContent = `Mengupload ${done + 1}/${files.length}…`;
+          getPath(path).push(await GH.uploadImage(file, "", "image"));
+          done++;
+        }
+        toast(`${done} foto terupload ✓ Klik Simpan untuk menerapkan.`);
+      } catch (e) {
+        toast(`Upload gagal${done ? ` setelah ${done} foto` : ""}: ${GH.errorText(e)}`, true);
+      }
+      if (done) setDirty(true);
+      rerender();
     };
     input.click();
   }

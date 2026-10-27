@@ -99,20 +99,46 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 /* ---------- Galeri ---------- */
 .gallery { grid-template-columns: repeat(3, 1fr); }
 .gallery-item { position: relative; border-radius: var(--radius); overflow: hidden; cursor: zoom-in; }
-.gallery-item .img { aspect-ratio: 4 / 3; }
+.slides { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--card); }
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+.slide.active { opacity: 1; z-index: 1; }
+.slide .img { height: 100%; }
+.photo-count { position: absolute; top: 12px; right: 12px; z-index: 2; padding: 4px 10px; border-radius: 999px; background: rgba(0,0,0,.65); color: #fff; font-size: .75rem; font-weight: 700; }
+.dots { position: absolute; left: 0; right: 0; top: 14px; z-index: 2; display: flex; justify-content: center; gap: 5px; pointer-events: none; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.45); transition: .3s; }
+.dots i.on { width: 18px; border-radius: 4px; background: var(--primary); }
 .gallery-item img { transition: transform .5s; }
 .gallery-item:hover img { transform: scale(1.06); }
 .gallery-item figcaption { position: absolute; inset: auto 0 0; padding: 40px 20px 18px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.75)); }
 .gallery-item figcaption span { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); font-weight: 700; }
-.gallery-item .img.missing ~ figcaption { background: none; color: var(--ink); position: static; padding: 12px 4px 0; }
+.gallery-item .slides:has(.slide.active .img.missing) ~ figcaption { background: none; color: var(--ink); position: static; padding: 12px 4px 0; }
 
-/* ---------- Tim ---------- */
-.team { grid-template-columns: repeat(4, 1fr); }
-.member { text-align: center; }
-.member-img { aspect-ratio: 1; border-radius: 50%; width: 76%; margin: 0 auto 18px; border: 3px solid var(--primary); box-shadow: 0 0 0 6px var(--bg-alt), var(--shadow); }
-.member-img.missing .img-hint { font-size: .68rem; }
-.member h3 { font-size: 1.05rem; }
-.member p { color: var(--muted); font-size: .9rem; }
+/* ---------- Tim: struktur organisasi ---------- */
+.org-wrap { display: flex; overflow-x: auto; padding: 8px 4px 16px; scrollbar-width: thin; }
+.org-tree { margin: 0 auto; }
+.org-tree, .org-tree ul { display: flex; justify-content: center; list-style: none; }
+.org-tree ul { position: relative; padding-top: 28px; }
+.org-tree li { position: relative; display: flex; flex-direction: column; align-items: center; padding: 28px 10px 0; }
+.org-tree > li { padding-top: 0; }
+/* garis penghubung */
+.org-tree ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 28px; border-left: 2px solid var(--primary); }
+.org-tree li::before, .org-tree li::after { content: ""; position: absolute; top: 0; right: 50%; width: 50%; height: 28px; border-top: 2px solid var(--primary); }
+.org-tree li::after { right: auto; left: 50%; border-left: 2px solid var(--primary); }
+.org-tree li:only-child::before { display: none; }
+.org-tree li:only-child::after { border-top: 0; }
+.org-tree li:first-child::before, .org-tree li:last-child::after { border: 0; }
+.org-tree li:last-child::before { border-right: 2px solid var(--primary); border-radius: 0 10px 0 0; }
+.org-tree li:first-child::after { border-radius: 10px 0 0 0; }
+.org-tree > li::before, .org-tree > li::after { display: none; }
+
+.org-node { width: 168px; padding: 18px 12px 16px; text-align: center; background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--primary); border-radius: 14px; box-shadow: var(--shadow); }
+.org-photo { width: 84px; height: 84px; margin: 0 auto 12px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 0 4px var(--bg-alt); }
+.org-photo.missing .img-hint { font-size: .55rem; padding: 6px; }
+.org-photo.missing .img-hint code { font-size: .55rem; }
+.org-node h3 { font-size: .98rem; line-height: 1.3; }
+.org-node p { color: var(--primary); font-size: .8rem; font-weight: 600; margin-top: 4px; }
+.org-tree > li > .org-node { width: 200px; }
+.org-tree > li > .org-node .org-photo { width: 104px; height: 104px; }
 
 /* ---------- Klien ---------- */
 .clients { padding: 56px 0; border-bottom: 1px solid var(--line); }
@@ -157,8 +183,13 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .wa-float:hover { transform: scale(1.08); }
 .wa-float[hidden], .lightbox[hidden] { display: none; }
 .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,.9); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
-.lightbox img { max-height: 82vh; border-radius: 8px; }
+.lightbox img { max-height: 82vh; max-width: 100%; border-radius: 8px; }
 .lightbox-caption { color: #fff; margin-top: 14px; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.5); color: #fff; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+.lb-nav:hover { border-color: var(--primary); color: var(--primary); }
+.lb-nav[hidden] { display: none; }
+.lb-prev { left: 16px; }
+.lb-next { right: 16px; }
 .lightbox-close { position: absolute; top: 14px; right: 22px; background: none; border: 0; color: #fff; font-size: 2.4rem; cursor: pointer; }
 
 /* ---------- Animasi ---------- */
@@ -169,7 +200,6 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 /* ---------- Responsif ---------- */
 @media (max-width: 960px) {
   .cards, .gallery, .quotes { grid-template-columns: repeat(2, 1fr); }
-  .team { grid-template-columns: repeat(2, 1fr); }
   .about, .contact { grid-template-columns: 1fr; gap: 40px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(3) { border-left: 0; }
@@ -186,4 +216,9 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
   .cards, .gallery, .quotes { grid-template-columns: 1fr; }
   .stat strong { font-size: 1.6rem; }
   .logo-item { width: 110px; }
+  .org-node, .org-tree > li > .org-node { width: 136px; padding: 14px 8px 12px; }
+  .org-photo, .org-tree > li > .org-node .org-photo { width: 64px; height: 64px; }
+  .org-tree li { padding-left: 5px; padding-right: 5px; }
+  .lb-nav { width: 40px; height: 40px; font-size: 1.4rem; }
+  .lb-prev { left: 8px; } .lb-next { right: 8px; }
 }

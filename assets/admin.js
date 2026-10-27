@@ -19,11 +19,11 @@ const LABELS = {
   description: "Deskripsi untuk Google (maks. 160 karakter)", primary: "Warna utama", accent: "Warna aksen",
   title: "Judul", subtitle: "Subjudul", image: "Foto", photo: "Foto", buttons: "Tombol", label: "Teks tombol",
   href: "Link", value: "Angka", paragraphs: "Paragraf", vision: "Visi", mission: "Misi", items: "Daftar",
-  icon: "Ikon (emoji)", text: "Keterangan", category: "Kategori", role: "Jabatan", logos: "Logo",
+  icon: "Ikon (emoji)", text: "Keterangan", category: "Kategori", role: "Jabatan", logos: "Logo", images: "Foto-foto", chart: "Struktur Organisasi", children: "Bawahan",
   quote: "Isi testimoni", company: "Perusahaan", address: "Alamat", phone: "Telepon", email: "Email",
   whatsapp: "Nomor WhatsApp (format 62…)", hours: "Jam operasional", mapEmbed: "Link embed Google Maps", url: "Link",
 };
-const IMAGE_KEYS = ["image", "photo", "logo"];
+const IMAGE_KEYS = ["image", "images", "photo", "logo"];
 const COLOR_KEYS = ["primary", "accent"];
 const LONG_KEYS = ["description", "subtitle", "text", "quote", "vision", "address", "paragraphs", "mission"];
 const ALWAYS_ON = ["company", "theme"];
@@ -257,6 +257,12 @@ function renderArray(parent, key, path, isRoot) {
         h.append(el("b", "", `#${i + 1} ${item.title || item.name || item.label || ""}`), tools);
         const grid = el("div", "item-grid");
         Object.keys(item).forEach((k) => {
+          if (item[k] && typeof item[k] === "object") {
+            const sub = el("div");
+            sub.style.gridColumn = "1 / -1";
+            renderValue(sub, item, k, `${path}.${k}`);
+            return grid.appendChild(sub);
+          }
           const f = renderField(item, k, labelOf(k));
           if (LONG_KEYS.includes(k) || isImageKey(k)) f.style.gridColumn = "1 / -1";
           grid.appendChild(f);
@@ -277,7 +283,8 @@ function renderArray(parent, key, path, isRoot) {
   add.onclick = (e) => {
     e.preventDefault();
     const tpl = arr[arr.length - 1];
-    arr.push(tpl && typeof tpl === "object" ? Object.fromEntries(Object.keys(tpl).map((k) => [k, ""])) : "");
+    const blank = (o) => Object.fromEntries(Object.keys(o).map((k) => [k, Array.isArray(o[k]) ? [] : ""]));
+    arr.push(tpl && typeof tpl === "object" ? blank(tpl) : key === "children" ? { photo: "", name: "", role: "", children: [] } : "");
     setDirty(true);
     redraw();
   };
