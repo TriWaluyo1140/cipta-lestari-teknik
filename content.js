@@ -89,7 +89,7 @@ window.SITE = {
     "subtitle": "Beberapa hasil kerja kami",
     "items": [
       {
-        "image": "images/proyek-1.jpg?v=mvqamphc",
+        "image": "images/proyek-1.jpg?v=mvqas7g6",
         "title": "ATS KRI Semarang",
         "category": "Kategori"
       },
