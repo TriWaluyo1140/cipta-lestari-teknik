@@ -438,8 +438,8 @@ window.SITE = {
         "name": "UPTD – Balai Benih Ikan Kota Depo, Jawa Barat"
       },
       {
-        "logo": "",
-        "name": "Nama Pelanggan"
+        "logo": "images/bakamla-mvqg819c.png?v=mvqg83ge",
+        "name": "Badan Keamanan Laut Republik Indonesia"
       }
     ]
   }
