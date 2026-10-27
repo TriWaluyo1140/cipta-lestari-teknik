@@ -30,6 +30,7 @@ a { color: var(--primary); text-decoration: none; }
 .nav.scrolled, .nav.open { background: rgba(10,10,10,.88); backdrop-filter: blur(10px); box-shadow: 0 1px 0 var(--line); }
 .brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; }
 .nav.scrolled .brand, .nav.open .brand { color: var(--ink); }
+.brand-logo { position: relative; display: flex; }
 .brand-logo img { height: 40px; width: auto; }
 .brand-logo b { display: none; }
 .brand-logo.nologo b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--primary); color: #0a0a0a; font-size: .95rem; }

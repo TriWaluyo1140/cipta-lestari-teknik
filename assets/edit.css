@@ -116,3 +116,9 @@ a.edit-muted:hover { color: var(--primary); }
 .edit-lang { padding: 1px 7px; border-radius: 6px; background: var(--primary); color: #0a0a0a; font-size: .72rem; }
 .client-logo > .edit-img-btn { font-size: .68rem; padding: 4px 9px; }
 body.editing .client-card { position: relative; }
+
+/* Logo & nama perusahaan di menu atas */
+.brand-logo > .edit-img-btn { left: auto; right: -8px; bottom: -8px; transform: none; width: 24px; height: 24px; padding: 0; font-size: 0; border-radius: 50%; display: grid; place-items: center; }
+.brand-logo > .edit-img-btn::before { content: "📷"; font-size: .7rem; }
+body.editing .brand { cursor: default; }
+body.editing .brand-name { padding: 0 4px; }

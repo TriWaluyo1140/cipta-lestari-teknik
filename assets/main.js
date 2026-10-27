@@ -313,7 +313,7 @@
     /* ---------- Brand ---------- */
     const logo = c.logo ? shownSrc(c.logo) : "";
     document.getElementById("brand").innerHTML =
-      `<span class="brand-logo${logo ? "" : " nologo"}">${logo ? `<img src="${esc(logo)}" alt="" onerror="this.parentNode.classList.add('nologo');this.remove()">` : ""}<b>${esc(c.shortName || (c.name || "").slice(0, 2))}</b></span><span class="brand-name">${esc(c.name)}</span>`;
+      `<span class="brand-logo${logo ? "" : " nologo"}" data-img="company.logo">${logo ? `<img src="${esc(logo)}" alt="" onerror="this.parentNode.classList.add('nologo');this.remove()">` : ""}<b>${esc(c.shortName || String(tr(c.name) || "").slice(0, 2))}</b></span>${T("company.name", "span", "brand-name")}`;
 
     /* ---------- Isi halaman ---------- */
     app.innerHTML = VIEWS[page](S);
