@@ -92,7 +92,8 @@ window.SITE = {
         "title": "ATS KRI Semarang",
         "category": "Kategori",
         "images": [
-          "images/proyek-1.jpg?v=mvqas7g6"
+          "images/proyek-1.jpg?v=mvqas7g6",
+          "images/screenshot-2026-10-27-at-13-03-41-mvqb0qmx.png?v=mvqb0tut"
         ]
       },
       {
