@@ -148,7 +148,9 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .footer-links, .social { display: flex; flex-wrap: wrap; gap: 10px 22px; }
 .footer a { color: rgba(255,255,255,.75); }
 .footer a:hover { color: var(--accent); }
-.copyright { border-top: 1px solid rgba(255,255,255,.1); padding: 20px 0; font-size: .85rem; }
+.copyright { border-top: 1px solid rgba(255,255,255,.1); padding: 20px 0; font-size: .85rem; display: flex; align-items: center; gap: 12px; padding-right: 80px; }
+.admin-link { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); font-size: .85rem; opacity: .45; transition: opacity .2s, border-color .2s; }
+.admin-link:hover { opacity: 1; border-color: var(--primary); }
 
 /* ---------- WhatsApp & Lightbox ---------- */
 .wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: #25D366; color: #fff; box-shadow: 0 8px 24px -6px rgba(37,211,102,.6); transition: transform .2s; }

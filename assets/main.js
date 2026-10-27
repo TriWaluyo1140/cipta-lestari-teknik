@@ -171,7 +171,7 @@
       <div class="footer-links">${navLinks.innerHTML}</div>
       ${S.social?.length ? `<div class="social">${S.social.map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join("")}</div>` : ""}
     </div>
-    <div class="container copyright">© ${new Date().getFullYear()} ${esc(c.name)}. Hak cipta dilindungi.</div>`;
+    <div class="container copyright"><a class="admin-link" href="admin.html" title="Edit website (admin)" aria-label="Edit website">🔒</a><span>© ${new Date().getFullYear()} ${esc(c.name)}. Hak cipta dilindungi.</span></div>`;
 
   /* ---------- Animasi muncul saat scroll ---------- */
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12 });
