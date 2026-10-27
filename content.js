@@ -97,15 +97,14 @@ window.SITE = {
         "title": "Layanan Enam",
         "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
       }
-    ],
-    "hidden": true
+    ]
   },
   "projects": {
     "title": "Proyek & Galeri",
     "subtitle": "Beberapa hasil kerja kami",
     "items": [
       {
-        "image": "images/proyek-1.jpg",
+        "image": "images/proyek-1.jpg?v=mvqa5owt",
         "title": "Nama Proyek 1",
         "category": "Kategori"
       },
