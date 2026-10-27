@@ -1,6 +1,6 @@
 /* =====================================================================
    KONTEN WEBSITE
-   Edit lewat halaman admin.html (disarankan), atau langsung di file ini.
+   Cara termudah: buka website → klik "🔒 Admin" di footer → edit langsung.
    Foto ada di folder images/. Bagian dengan "hidden": true tidak ditampilkan.
    ===================================================================== */
 
@@ -18,7 +18,7 @@ window.SITE = {
   },
   "hero": {
     "title": "Membangun Masa Depan Bersama Anda",
-    "subtitle": "Kami menyediakan layanan profesional dengan standar kualitas tinggi sejak tahun 2005.",
+    "subtitle": "Kami menyediakan layanan profesional dengan standar kualitas tinggi sejak tahun 2012.",
     "image": "images/hero.jpg",
     "buttons": [
       {
@@ -97,7 +97,8 @@ window.SITE = {
         "title": "Layanan Enam",
         "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
       }
-    ]
+    ],
+    "hidden": true
   },
   "projects": {
     "title": "Proyek & Galeri",
