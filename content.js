@@ -89,62 +89,84 @@ window.SITE = {
     "subtitle": "Beberapa hasil kerja kami",
     "items": [
       {
-        "image": "images/proyek-1.jpg?v=mvqas7g6",
         "title": "ATS KRI Semarang",
-        "category": "Kategori"
+        "category": "Kategori",
+        "images": [
+          "images/proyek-1.jpg?v=mvqas7g6"
+        ]
       },
       {
-        "image": "images/proyek-2.jpg",
         "title": "Nama Proyek 2",
-        "category": "Kategori"
+        "category": "Kategori",
+        "images": [
+          "images/proyek-2.jpg"
+        ]
       },
       {
-        "image": "images/proyek-3.jpg",
         "title": "Nama Proyek 3",
-        "category": "Kategori"
+        "category": "Kategori",
+        "images": [
+          "images/proyek-3.jpg"
+        ]
       },
       {
-        "image": "images/proyek-4.jpg",
         "title": "Nama Proyek 4",
-        "category": "Kategori"
+        "category": "Kategori",
+        "images": [
+          "images/proyek-4.jpg"
+        ]
       },
       {
-        "image": "images/proyek-5.jpg",
         "title": "Nama Proyek 5",
-        "category": "Kategori"
+        "category": "Kategori",
+        "images": [
+          "images/proyek-5.jpg"
+        ]
       },
       {
-        "image": "images/proyek-6.jpg",
         "title": "Nama Proyek 6",
-        "category": "Kategori"
+        "category": "Kategori",
+        "images": [
+          "images/proyek-6.jpg"
+        ]
       }
     ]
   },
   "team": {
     "title": "Tim Manajemen",
     "subtitle": "Orang-orang di balik perusahaan kami",
-    "items": [
-      {
-        "photo": "images/tim-1.jpg",
-        "name": "Nama Lengkap",
-        "role": "Direktur Utama"
-      },
-      {
-        "photo": "images/tim-2.jpg",
-        "name": "Nama Lengkap",
-        "role": "Direktur Operasional"
-      },
-      {
-        "photo": "images/tim-3.jpg",
-        "name": "Nama Lengkap",
-        "role": "Direktur Keuangan"
-      },
-      {
-        "photo": "images/tim-4.jpg",
-        "name": "Nama Lengkap",
-        "role": "Manajer Pemasaran"
-      }
-    ]
+    "chart": {
+      "photo": "images/tim-1.jpg",
+      "name": "Raymond Budi Sumali",
+      "role": "Direktur Utama",
+      "children": [
+        {
+          "photo": "images/tim-2.jpg?v=mvqazfg7",
+          "name": "Tri Waluyo",
+          "role": "Direktur Operasional",
+          "children": []
+        },
+        {
+          "photo": "images/tim-3.jpg",
+          "name": "Tim Proyek",
+          "role": "Direktur Keuangan",
+          "children": [
+            {
+              "photo": "",
+              "name": "Nama Lengkap",
+              "role": "Jabatan",
+              "children": []
+            }
+          ]
+        },
+        {
+          "photo": "",
+          "name": "Nama Lengkap",
+          "role": "Jabatan",
+          "children": []
+        }
+      ]
+    }
   },
   "clients": {
     "title": "Dipercaya Oleh",
