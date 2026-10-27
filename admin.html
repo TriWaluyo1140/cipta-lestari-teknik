@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <!-- ========== Layar kunci ========== -->
+  <section class="login" id="login">
+    <form class="login-card" id="loginForm" autocomplete="off">
+      <div class="lock">🔒</div>
+      <h1>Admin Website</h1>
+      <p class="muted">Masuk dengan token GitHub yang punya izin tulis ke repository website ini.</p>
+
+      <label>Token GitHub
+        <input type="password" id="token" placeholder="github_pat_…" required>
+      </label>
+      <details id="repoBox">
+        <summary>Repository: <b id="repoLabel">—</b></summary>
+        <div class="row3">
+          <label>Pemilik / akun<input id="owner" required></label>
+          <label>Nama repo<input id="repo" required></label>
+          <label>Branch<input id="branch" value="main" required></label>
+        </div>
+      </details>
+      <label class="check"><input type="checkbox" id="remember"> Ingat di perangkat ini</label>
+      <button class="btn" type="submit" id="loginBtn">Buka Kunci</button>
+      <p class="error" id="loginError"></p>
+
+      <details class="help">
+        <summary>Cara membuat token</summary>
+        <ol>
+          <li>Buka <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token baru</a>.</li>
+          <li><b>Repository access</b>: <i>Only select repositories</i> → pilih repo website ini.</li>
+          <li><b>Permissions → Contents</b>: <i>Read and write</i>.</li>
+          <li>Klik <b>Generate token</b>, salin, lalu tempel di atas.</li>
+        </ol>
+        <p class="muted">Token hanya disimpan di browser ini, tidak pernah ikut ke website. Jangan bagikan token ke orang lain.</p>
+      </details>
+    </form>
+  </section>
+
+  <!-- ========== Editor ========== -->
+  <section class="editor" id="editor" hidden>
+    <header class="topbar">
+      <div class="topbar-title"><span class="dot"></span> <b>Admin</b> <span class="muted" id="repoInfo"></span></div>
+      <div class="topbar-actions">
+        <a class="btn-sm" href="./" target="_blank" rel="noopener">Lihat website ↗</a>
+        <button class="btn-sm" id="logoutBtn">Kunci</button>
+        <button class="btn" id="saveBtn" disabled>Simpan</button>
+      </div>
+    </header>
+    <div class="layout">
+      <nav class="tabs" id="tabs"></nav>
+      <main class="panel" id="panel"></main>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="assets/admin.js"></script>
+</body>
+</html>
