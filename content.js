@@ -142,7 +142,7 @@ window.SITE = {
     "title": "Tim Manajemen",
     "subtitle": "Orang-orang di balik perusahaan kami",
     "chart": {
-      "photo": "images/tim-1.jpg",
+      "photo": "images/tim-1.jpg?v=mvqe2lif",
       "name": "Raymond Budi Sumali",
       "role": "Direktur Utama",
       "children": [
