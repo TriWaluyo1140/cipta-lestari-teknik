@@ -112,3 +112,7 @@ a.edit-muted:hover { color: var(--primary); }
 .card-icon > .edit-img-btn::before { content: "📷"; font-size: .65rem; }
 .card-icon.has-img > .edit-img-btn { right: 8px; bottom: 8px; width: auto; height: auto; padding: 5px 10px; font-size: .72rem; border-radius: 999px; }
 .card-icon.has-img > .edit-img-btn::before { content: none; }
+
+.edit-lang { padding: 1px 7px; border-radius: 6px; background: var(--primary); color: #0a0a0a; font-size: .72rem; }
+.client-logo > .edit-img-btn { font-size: .68rem; padding: 4px 9px; }
+body.editing .client-card { position: relative; }

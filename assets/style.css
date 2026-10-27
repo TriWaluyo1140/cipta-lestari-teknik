@@ -33,8 +33,8 @@ a { color: var(--primary); text-decoration: none; }
 .brand-logo img { height: 40px; width: auto; }
 .brand-logo b { display: none; }
 .brand-logo.nologo b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--primary); color: #0a0a0a; font-size: .95rem; }
-.nav-links { display: flex; gap: 28px; }
-.nav-links a { color: rgba(255,255,255,.9); font-weight: 600; font-size: .95rem; }
+.nav-links { display: flex; gap: 22px; margin-left: auto; }
+.nav-links a { color: rgba(255,255,255,.9); font-weight: 600; font-size: .9rem; }
 .nav.scrolled .nav-links a { color: var(--ink); }
 .nav-links a:hover { color: var(--accent) !important; }
 .nav-toggle { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; }
@@ -283,3 +283,23 @@ body[data-page="kontak"] .map, body[data-page="kontak"] .map iframe { min-height
   .page-banner { padding: 92px 0 22px; }
   .cta { padding: 28px 24px; }
 }
+
+/* ---------- Pilihan bahasa ---------- */
+.lang-switch { display: flex; margin-left: 20px; padding: 3px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.25); }
+.lang-switch button { border: 0; background: none; color: rgba(255,255,255,.7); font: inherit; font-size: .75rem; font-weight: 700; padding: 4px 9px; border-radius: 999px; cursor: pointer; }
+.lang-switch button.on { background: var(--primary); color: #0a0a0a; }
+.lang-switch button:not(.on):hover { color: #fff; }
+@media (max-width: 760px) { .lang-switch { margin-left: auto; margin-right: 8px; } }
+
+/* ---------- Pelanggan Kami: kartu logo kecil ---------- */
+.clients-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+.client-card { padding: 12px 12px 14px; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; transition: transform .25s, border-color .25s; }
+.client-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+.client-logo { height: 96px; border-radius: 10px; background: #fff; }
+.client-logo img { object-fit: contain; padding: 12px; }
+.client-logo.missing .img-hint { font-size: .68rem; }
+.client-card p { margin-top: 10px; font-size: .85rem; font-weight: 600; line-height: 1.3; }
+@media (max-width: 560px) { .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .client-logo { height: 80px; } }
+.nav-links { order: 2; }
+.lang-switch { order: 3; }
+.nav-toggle { order: 4; }

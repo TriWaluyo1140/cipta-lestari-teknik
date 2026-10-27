@@ -3,7 +3,37 @@
    Atribut data-edit / data-img / data-item / data-list / data-section dipakai mode edit (edit.js). */
 (function () {
   const app = document.getElementById("app");
-  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  /* ---------- Bahasa (ID / EN) ---------- */
+  // Teks bisa berupa "teks" biasa atau { id: "…", en: "…" }. Versi EN kosong → tampil versi ID.
+  const LANGS = ["id", "en"];
+  let lang = (() => {
+    const q = new URLSearchParams(location.search).get("lang");
+    let saved = null;
+    try { saved = localStorage.getItem("lang"); } catch {}
+    return LANGS.includes(q) ? q : LANGS.includes(saved) ? saved : "id";
+  })();
+  const isTr = (v) => v && typeof v === "object" && !Array.isArray(v) && ("id" in v || "en" in v);
+  const tr = (v) => (isTr(v) ? (lang === "en" ? v.en || v.id || "" : v.id ?? v.en ?? "") : v);
+  const UI = {
+    id: { beranda: "Beranda", tentang: "Tentang", layanan: "Layanan", proyek: "Proyek", pelanggan: "Pelanggan", tim: "Tim", kontak: "Kontak",
+      moreServices: "Lihat semua layanan", moreProjects: "Lihat semua proyek", moreClients: "Lihat semua pelanggan", contactUs: "Hubungi Kami",
+      vision: "Visi", mission: "Misi", address: "Alamat", phone: "Telepon", email: "Email", whatsapp: "WhatsApp", hours: "Jam Operasional",
+      chat: "Chat sekarang", rights: "Hak cipta dilindungi.", upload: "Upload foto", map: "Lokasi kantor" },
+    en: { beranda: "Home", tentang: "About", layanan: "Services", proyek: "Projects", pelanggan: "Clients", tim: "Team", kontak: "Contact",
+      moreServices: "View all services", moreProjects: "View all projects", moreClients: "View all clients", contactUs: "Contact Us",
+      vision: "Vision", mission: "Mission", address: "Address", phone: "Phone", email: "Email", whatsapp: "WhatsApp", hours: "Office Hours",
+      chat: "Chat now", rights: "All rights reserved.", upload: "Upload photo", map: "Office location" },
+  };
+  const ui = (k) => UI[lang][k];
+  function setLang(l) {
+    lang = l;
+    try { localStorage.setItem("lang", l); } catch {}
+    render();
+  }
+  window.siteLang = () => lang;
+
+  const esc = (s) => String(tr(s) ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const editing = () => document.body.classList.contains("editing");
   const get = (path) => path.split(".").reduce((o, k) => o?.[k], window.SITE);
 
@@ -15,7 +45,7 @@
   const img = (path, alt, cls = "", editable = true) => {
     const src = get(path) || "";
     const shown = shownSrc(src);
-    return `<div class="img ${cls}${src ? "" : " missing"}"${editable ? ` data-img="${path}"` : ""}>${src ? `<img src="${esc(shown)}" alt="${esc(alt)}" loading="lazy" onerror="this.parentNode.classList.add('missing')">` : ""}<span class="img-hint">Upload foto${src ? `:<br><code>${esc(src.split("?")[0])}</code>` : ""}</span></div>`;
+    return `<div class="img ${cls}${src ? "" : " missing"}"${editable ? ` data-img="${path}"` : ""}>${src ? `<img src="${esc(shown)}" alt="${esc(alt)}" loading="lazy" onerror="this.parentNode.classList.add('missing')">` : ""}<span class="img-hint">${ui("upload")}${src ? `:<br><code>${esc(src.split("?")[0])}</code>` : ""}</span></div>`;
   };
 
   const head = (key, withSub = true) => `<div class="section-head reveal">${T(`${key}.title`, "h2")}${withSub && get(`${key}.subtitle`) != null ? T(`${key}.subtitle`, "p") : ""}</div>`;
@@ -26,12 +56,13 @@
 
   // Daftar halaman (urutan = urutan menu)
   const PAGES = [
-    { id: "beranda", label: "Beranda" },
-    { id: "tentang", label: "Tentang", key: "about" },
-    { id: "layanan", label: "Layanan", key: "services" },
-    { id: "proyek", label: "Proyek", key: "projects" },
-    { id: "tim", label: "Tim", key: "team" },
-    { id: "kontak", label: "Kontak", key: "contact" },
+    { id: "beranda" },
+    { id: "tentang", key: "about" },
+    { id: "layanan", key: "services" },
+    { id: "proyek", key: "projects" },
+    { id: "pelanggan", key: "customers" },
+    { id: "tim", key: "team" },
+    { id: "kontak", key: "contact" },
   ];
   const currentPage = () => {
     const id = location.hash.slice(1);
@@ -41,6 +72,13 @@
 
   // Menyesuaikan format konten lama: 1 foto proyek → daftar foto, daftar tim → struktur organisasi
   function normalize(S) {
+    if (!S.customers) {
+      S.customers = {
+        title: { id: "Pelanggan Kami", en: "Our Clients" },
+        subtitle: { id: "Perusahaan dan instansi yang telah mempercayakan kebutuhannya kepada kami", en: "Companies and institutions that have trusted us with their needs" },
+        items: [1, 2, 3, 4].map(() => ({ logo: "", name: "Nama Pelanggan" })),
+      };
+    }
     if (S.about && !Array.isArray(S.about.images)) {
       S.about.images = S.about.image ? [S.about.image] : [];
       delete S.about.image;
@@ -94,6 +132,14 @@
     </div>`;
   };
 
+  // Kartu logo pelanggan (kecil, latar putih agar logo jelas)
+  const customerCards = (limit) => {
+    const items = (window.SITE.customers.items || []).slice(0, limit || undefined);
+    return `<div class="grid clients-grid"${limit ? "" : ' data-list="customers.items"'}>${items.map((c, i) => `
+      <div class="client-card reveal" data-item="customers.items.${i}">${img(`customers.items.${i}.logo`, c.name, "client-logo")}${T(`customers.items.${i}.name`, "p")}</div>`).join("")}
+    </div>`;
+  };
+
   const projectCards = (limit) => {
     const items = (window.SITE.projects.items || []).slice(0, limit || undefined);
     return `<div class="grid gallery"${limit ? "" : ' data-list="projects.items"'}>${items.map((it, i) => `
@@ -105,7 +151,7 @@
   };
 
   /* ---------- Struktur organisasi: pimpinan → bidang → anggota ---------- */
-  const initials = (n) => String(n || "").trim().split(/\s+/).slice(0, 2).map((w) => w[0] || "").join("").toUpperCase();
+  const initials = (n) => String(tr(n) || "").trim().split(/\s+/).slice(0, 2).map((w) => w[0] || "").join("").toUpperCase();
   // Foto bulat; jika belum ada foto, tampil inisial nama
   const avatar = (p, name, cls) => `<div class="avatar ${cls}" data-initials="${esc(initials(name))}">${img(`${p}.photo`, name)}</div>`;
   const opt = (path, tag) => (get(path) || editing() ? T(path, tag) : "");
@@ -158,10 +204,13 @@
           <div class="stat" data-item="stats.${i}">${T(`stats.${i}.value`, "strong")}${T(`stats.${i}.label`)}</div>`).join("")}</div></div>`;
       }
       if (on("services") && !S.services.hidden) {
-        html += `<section class="section"><div class="container">${head("services")}${serviceCards(3)}${more("#layanan", "Lihat semua layanan")}</div></section>`;
+        html += `<section class="section"><div class="container">${head("services")}${serviceCards(3)}${more("#layanan", ui("moreServices"))}</div></section>`;
       }
       if (on("projects") && !S.projects.hidden) {
-        html += `<section class="section alt"><div class="container">${head("projects")}${projectCards(3)}${more("#proyek", "Lihat semua proyek")}</div></section>`;
+        html += `<section class="section alt"><div class="container">${head("projects")}${projectCards(3)}${more("#proyek", ui("moreProjects"))}</div></section>`;
+      }
+      if (on("customers") && !S.customers.hidden) {
+        html += `<section class="section"><div class="container">${head("customers")}${customerCards(6)}${more("#pelanggan", ui("moreClients"))}</div></section>`;
       }
       if (on("clients")) {
         html += `
@@ -188,7 +237,7 @@
           <section class="section">
             <div class="container"><div class="cta reveal">
               <div>${T("contact.title", "h2")}${T("contact.subtitle", "p")}</div>
-              <a class="btn" href="#kontak">Hubungi Kami</a>
+              <a class="btn" href="#kontak">${ui("contactUs")}</a>
             </div></div>
           </section>`;
       }
@@ -204,8 +253,8 @@
             <div class="reveal about-text">
               <div data-list="about.paragraphs">${(a.paragraphs || []).map((_, i) => `<div data-item="about.paragraphs.${i}">${T(`about.paragraphs.${i}`, "p")}</div>`).join("")}</div>
               <div class="vm-row">
-                ${a.vision != null ? `<div class="vm"><h3>Visi</h3>${T("about.vision", "p")}</div>` : ""}
-                ${a.mission ? `<div class="vm"><h3>Misi</h3><ul data-list="about.mission">${a.mission.map((_, i) => `<li data-item="about.mission.${i}">${T(`about.mission.${i}`)}</li>`).join("")}</ul></div>` : ""}
+                ${a.vision != null ? `<div class="vm"><h3>${ui("vision")}</h3>${T("about.vision", "p")}</div>` : ""}
+                ${a.mission ? `<div class="vm"><h3>${ui("mission")}</h3><ul data-list="about.mission">${a.mission.map((_, i) => `<li data-item="about.mission.${i}">${T(`about.mission.${i}`)}</li>`).join("")}</ul></div>` : ""}
               </div>
             </div>
           </div>
@@ -216,22 +265,24 @@
 
     proyek: () => `${banner("projects")}<section class="section"><div class="container">${projectCards()}</div></section>`,
 
+    pelanggan: () => `${banner("customers")}<section class="section"><div class="container">${customerCards()}</div></section>`,
+
     tim: (S) => `${banner("team")}<section class="section"><div class="container">${orgChart(S.team.chart)}</div></section>`,
 
     kontak(S) {
       const k = S.contact;
       const ed = editing();
-      const wa = k.whatsapp ? `https://wa.me/${String(k.whatsapp).replace(/\D/g, "")}` : "";
+      const wa = k.whatsapp ? `https://wa.me/${String(tr(k.whatsapp)).replace(/\D/g, "")}` : "";
       const rows = [
-        ["📍", "Alamat", "address", T("contact.address")],
-        ["📞", "Telepon", "phone", `<a href="tel:${esc(String(k.phone || "").replace(/[^\d+]/g, ""))}">${T("contact.phone")}</a>`],
-        ["✉️", "Email", "email", `<a href="mailto:${esc(k.email)}">${T("contact.email")}</a>`],
-        ["💬", "WhatsApp", "whatsapp", ed ? T("contact.whatsapp") : `<a href="${wa}" target="_blank" rel="noopener">Chat sekarang</a>`],
-        ["🕘", "Jam Operasional", "hours", T("contact.hours")],
+        ["📍", ui("address"), "address", T("contact.address")],
+        ["📞", ui("phone"), "phone", `<a href="tel:${esc(String(tr(k.phone) || "").replace(/[^\d+]/g, ""))}">${T("contact.phone")}</a>`],
+        ["✉️", ui("email"), "email", `<a href="mailto:${esc(String(tr(k.email) || "").trim())}">${T("contact.email")}</a>`],
+        ["💬", ui("whatsapp"), "whatsapp", ed ? T("contact.whatsapp") : `<a href="${wa}" target="_blank" rel="noopener">${ui("chat")}</a>`],
+        ["🕘", ui("hours"), "hours", T("contact.hours")],
       ].filter((r) => (ed ? k[r[2]] != null : k[r[2]]));
       // Peta mengikuti alamat; link "Sematkan peta" dari Google Maps (…/maps/embed…) dipakai bila diisi
       const map = /\/maps\/embed/.test(k.mapEmbed || "") ? k.mapEmbed
-        : k.address ? `https://www.google.com/maps?q=${encodeURIComponent(k.address)}&output=embed` : "";
+        : k.address ? `https://www.google.com/maps?q=${encodeURIComponent(tr(k.address))}&output=embed` : "";
       return `${banner("contact")}
         <section class="section">
           <div class="container">
@@ -239,7 +290,7 @@
               <div class="contact-info reveal">
                 ${rows.map((r) => `<div class="contact-row"><span class="ci">${r[0]}</span><div><small>${r[1]}</small><p>${r[3]}</p></div></div>`).join("")}
               </div>
-              ${map ? `<div class="map reveal"><iframe src="${esc(map)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi kantor"></iframe></div>` : ""}
+              ${map ? `<div class="map reveal"><iframe src="${esc(map)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="${ui("map")}"></iframe></div>` : ""}
             </div>
           </div>
         </section>`;
@@ -257,9 +308,10 @@
     const root = document.documentElement.style;
     if (S.theme?.primary) root.setProperty("--primary", S.theme.primary);
     if (S.theme?.accent) root.setProperty("--accent", S.theme.accent);
-    const label = PAGES.find((p) => p.id === page).label;
-    document.title = page === "beranda" ? (c.tagline ? `${c.name} — ${c.tagline}` : c.name || "Website") : `${label} — ${c.name}`;
-    document.querySelector('meta[name="description"]').content = c.description || "";
+    const name = tr(c.name);
+    document.title = page === "beranda" ? (c.tagline ? `${name} — ${tr(c.tagline)}` : name || "Website") : `${ui(page)} — ${name}`;
+    document.querySelector('meta[name="description"]').content = tr(c.description) || "";
+    document.documentElement.lang = lang;
     document.body.dataset.page = page;
 
     /* ---------- Brand ---------- */
@@ -271,11 +323,12 @@
     app.innerHTML = VIEWS[page](S);
 
     /* ---------- Navigasi ---------- */
-    const links = pages.map((p) => `<a href="#${p.id}"${p.id === page ? ' class="active"' : ""}>${p.label}</a>`).join("");
+    const links = pages.map((p) => `<a href="#${p.id}"${p.id === page ? ' class="active"' : ""}>${ui(p.id)}</a>`).join("");
     navLinks.innerHTML = links;
+    langSwitch.innerHTML = LANGS.map((l) => `<button type="button" data-lang="${l}"${l === lang ? ' class="on"' : ""}>${l.toUpperCase()}</button>`).join("");
 
     const k = S.contact;
-    const wa = k?.whatsapp ? `https://wa.me/${String(k.whatsapp).replace(/\D/g, "")}` : "";
+    const wa = k?.whatsapp ? `https://wa.me/${String(tr(k.whatsapp)).replace(/\D/g, "")}` : "";
     const f = document.getElementById("waFloat");
     f.href = wa;
     f.hidden = !wa || !on("contact");
@@ -287,7 +340,7 @@
         <div class="footer-links">${links}</div>
         ${S.social?.length ? `<div class="social">${S.social.map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join("")}</div>` : ""}
       </div>
-      <div class="container copyright"><a class="admin-link" href="#edit" id="adminLink" title="Edit website" aria-label="Edit website">🔒 Admin</a><span>© ${new Date().getFullYear()} ${esc(c.name)}. Hak cipta dilindungi.</span></div>`;
+      <div class="container copyright"><a class="admin-link" href="#edit" id="adminLink" title="Edit website" aria-label="Edit website">🔒 Admin</a><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${ui("rights")}</span></div>`;
 
     /* ---------- Animasi muncul saat scroll ---------- */
     document.querySelectorAll(".reveal").forEach((el) => (editing() ? el.classList.add("in") : io.observe(el)));
@@ -335,6 +388,8 @@
   /* ---------- Bagian yang cukup dipasang sekali ---------- */
   const navLinks = document.getElementById("navLinks");
   const nav = document.getElementById("nav");
+  const langSwitch = document.getElementById("langSwitch");
+  langSwitch.onclick = (e) => { const b = e.target.closest("[data-lang]"); if (b && b.dataset.lang !== lang) setLang(b.dataset.lang); };
   document.getElementById("navToggle").onclick = () => nav.classList.toggle("open");
   navLinks.onclick = (e) => { if (e.target.tagName === "A") nav.classList.remove("open"); };
   const onScroll = () => nav.classList.toggle("scrolled", scrollY > 40);

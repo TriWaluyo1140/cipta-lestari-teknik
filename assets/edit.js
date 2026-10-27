@@ -2,7 +2,7 @@
    klik teks untuk mengetik, klik "📷 Ganti" untuk upload foto, lalu Simpan. */
 (function () {
   const SECTION_LABELS = {
-    hero: "Bagian Atas", about: "Tentang Kami", services: "Layanan", projects: "Proyek & Galeri",
+    hero: "Bagian Atas", customers: "Pelanggan Kami", about: "Tentang Kami", services: "Layanan", projects: "Proyek & Galeri",
     team: "Tim", clients: "Logo Klien", testimonials: "Testimoni", contact: "Kontak",
   };
   // Isi awal saat menekan "+ Tambah"
@@ -13,6 +13,7 @@
     "services.items": { icon: "⭐", title: "Layanan Baru", text: "Keterangan singkat layanan." },
     "projects.items": { images: [], title: "Proyek Baru", category: "Kategori" },
     "clients.logos": { image: "", name: "Klien" },
+    "customers.items": { logo: "", name: "Nama Pelanggan" },
     "testimonials.items": { quote: "Isi testimoni.", name: "Nama Klien", company: "Perusahaan" },
   };
 
@@ -26,6 +27,14 @@
     const keys = path.split(".");
     const last = keys.pop();
     keys.reduce((o, k) => o[k], window.SITE)[last] = val;
+  }
+  // Simpan teks ke versi bahasa yang sedang tampil (ID atau EN)
+  function setText(path, text) {
+    const lang = window.siteLang?.() || "id";
+    const cur = getPath(path);
+    if (cur && typeof cur === "object" && !Array.isArray(cur)) cur[lang] = text;
+    else if (lang === "id") setPath(path, text);
+    else setPath(path, { id: cur ?? "", en: text });
   }
   const splitLast = (path) => { const i = path.lastIndexOf("."); return [path.slice(0, i), +path.slice(i + 1)]; };
 
@@ -49,7 +58,7 @@
       </form>
     </div>
     <div class="edit-ui edit-bar" id="editBar" hidden>
-      <span class="edit-bar-title"><i></i>Mode Edit <small>klik teks / foto untuk mengubah</small></span>
+      <span class="edit-bar-title"><i></i>Mode Edit <b class="edit-lang">ID</b> <small>klik teks / foto untuk mengubah</small></span>
       <a class="edit-btn-sm" href="admin.html" target="_blank" title="Logo, warna, link tombol, media sosial, peta">⚙️ <span>Pengaturan</span></a>
       <button class="edit-btn-sm" id="editExit">Keluar</button>
       <button class="edit-btn" id="editSave" disabled>Simpan</button>
@@ -162,11 +171,12 @@
   /* ---------- Pasang alat edit setiap kali halaman dirender ---------- */
   document.addEventListener("site:rendered", () => {
     if (!editing()) return;
+    bar.querySelector(".edit-lang").textContent = (window.siteLang?.() || "id").toUpperCase();
 
     document.querySelectorAll("[data-edit]").forEach((el) => {
       try { el.contentEditable = "plaintext-only"; } catch { el.contentEditable = "true"; }
       el.spellcheck = false;
-      el.addEventListener("input", () => { setPath(el.dataset.edit, el.textContent); setDirty(true); });
+      el.addEventListener("input", () => { setText(el.dataset.edit, el.textContent); setDirty(true); });
       el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
     });
 

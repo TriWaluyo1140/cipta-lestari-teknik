@@ -12,14 +12,14 @@ let activeTab = null;
 const SECTION_LABELS = {
   company: "Identitas", theme: "Warna", hero: "Bagian Atas", stats: "Angka Pencapaian",
   about: "Tentang Kami", services: "Layanan", projects: "Proyek & Galeri", team: "Tim",
-  clients: "Logo Klien", testimonials: "Testimoni", contact: "Kontak", social: "Media Sosial",
+  clients: "Logo Klien", customers: "Pelanggan Kami", testimonials: "Testimoni", contact: "Kontak", social: "Media Sosial",
 };
 const LABELS = {
   name: "Nama", shortName: "Singkatan (tampil jika logo kosong)", logo: "Logo", tagline: "Tagline",
   description: "Deskripsi untuk Google (maks. 160 karakter)", primary: "Warna utama", accent: "Warna aksen",
   title: "Judul", subtitle: "Subjudul", image: "Foto", photo: "Foto", buttons: "Tombol", label: "Teks tombol",
   href: "Link", value: "Angka", paragraphs: "Paragraf", vision: "Visi", mission: "Misi", items: "Daftar",
-  icon: "Ikon (emoji)", text: "Keterangan", category: "Kategori", role: "Jabatan", logos: "Logo", images: "Foto-foto", chart: "Struktur Organisasi", children: "Bawahan",
+  icon: "Ikon (emoji)", text: "Keterangan", category: "Kategori", role: "Jabatan", logos: "Logo", id: "Bahasa Indonesia", en: "English", images: "Foto-foto", chart: "Struktur Organisasi", children: "Bawahan",
   quote: "Isi testimoni", company: "Perusahaan", address: "Alamat", phone: "Telepon", email: "Email",
   whatsapp: "Nomor WhatsApp (format 62…)", hours: "Jam operasional", mapEmbed: "Link embed Google Maps", url: "Link",
 };
@@ -254,7 +254,8 @@ function renderArray(parent, key, path, isRoot) {
       if (item && typeof item === "object") {
         const card = el("div", "item");
         const h = el("div", "item-head");
-        h.append(el("b", "", `#${i + 1} ${item.title || item.name || item.label || ""}`), tools);
+        const txt = (v) => (v && typeof v === "object" ? v.id : v) || "";
+        h.append(el("b", "", `#${i + 1} ${txt(item.title) || txt(item.name) || txt(item.label)}`), tools);
         const grid = el("div", "item-grid");
         Object.keys(item).forEach((k) => {
           if (item[k] && typeof item[k] === "object") {
