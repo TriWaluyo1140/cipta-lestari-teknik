@@ -158,7 +158,7 @@ window.SITE = {
               "children": []
             },
             {
-              "photo": "",
+              "photo": "images/screenshot-2026-10-27-at-15-02-51-mvqei19o.png?v=mvqei4d2",
               "name": "Bonardo TS",
               "role": "",
               "children": []
