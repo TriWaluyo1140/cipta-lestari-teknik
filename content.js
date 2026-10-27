@@ -81,21 +81,6 @@ window.SITE = {
         "icon": "📦",
         "title": "Layanan Tiga",
         "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
-      },
-      {
-        "icon": "🤝",
-        "title": "Layanan Empat",
-        "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
-      },
-      {
-        "icon": "📊",
-        "title": "Layanan Lima",
-        "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
-      },
-      {
-        "icon": "🛡️",
-        "title": "Layanan Enam",
-        "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
       }
     ]
   },
