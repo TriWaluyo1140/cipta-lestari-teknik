@@ -127,7 +127,7 @@ window.SITE = {
     },
     "items": [
       {
-        "icon": "🏗️",
+        "icon": "images/soletop-mvqh4hya.png?v=mvqh4k84",
         "title": "SOLETOP",
         "text": "Remote Sensing and Telepresense"
       },
@@ -137,14 +137,14 @@ window.SITE = {
         "text": "Telescope and Instrument"
       },
       {
-        "icon": "📦",
+        "icon": "images/officina-mvqh51dh.png?v=mvqh5ppi",
         "title": {
           "id": "Layanan Tiga",
-          "en": "Service Three"
+          "en": "Kaercher"
         },
         "text": {
           "id": "Penjelasan singkat tentang layanan ini, 1–2 kalimat.",
-          "en": "A short description of this service, 1–2 sentences."
+          "en": "Water Treatment"
         }
       }
     ]
