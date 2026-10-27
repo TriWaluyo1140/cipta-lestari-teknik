@@ -217,11 +217,11 @@ window.SITE = {
   "contact": {
     "title": "Hubungi Kami",
     "subtitle": "Konsultasikan kebutuhan Anda, gratis.",
-    "address": "Jl. Contoh No. 123, Jakarta Selatan, DKI Jakarta 12345",
-    "phone": "+62 21 1234 5678",
-    "email": "info@perusahaan.co.id",
-    "whatsapp": "6281234567890",
-    "hours": "Senin – Jumat, 08.00 – 17.00 WIB",
+    "address": "The Mansion At Dukuh Golf Kemayoran Blok Bougenville BF-11 F2, Jl. Trembesi Blok D Bandar Baru Jakarta Utara 14410",
+    "phone": "+62 21 22606445 ",
+    "email": "pt.clteknik@gmail.com  ",
+    "whatsapp": "628999905602",
+    "hours": "Senin – Jumat, 08.30– 17.00 WIB",
     "mapEmbed": "https://www.google.com/maps?q=Monas+Jakarta&output=embed"
   },
   "social": [
