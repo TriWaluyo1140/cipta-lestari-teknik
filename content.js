@@ -71,13 +71,13 @@ window.SITE = {
     "items": [
       {
         "icon": "🏗️",
-        "title": "Layanan Satu",
-        "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
+        "title": "SOLETOP",
+        "text": "Remote Sensing and Telepresense"
       },
       {
         "icon": "🛠️",
-        "title": "Layanan Dua",
-        "text": "Penjelasan singkat tentang layanan ini, 1–2 kalimat."
+        "title": "OFFICINA STELLARE",
+        "text": "Telescope and Instrument"
       },
       {
         "icon": "📦",
