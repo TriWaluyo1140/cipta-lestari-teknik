@@ -75,7 +75,7 @@ window.SITE = {
         "text": "Remote Sensing and Telepresense"
       },
       {
-        "icon": "🛠️",
+        "icon": "images/picture7-mvqdupft.png?v=mvqduri1",
         "title": "OFFICINA STELLARE",
         "text": "Telescope and Instrument"
       },
