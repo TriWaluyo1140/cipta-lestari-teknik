@@ -53,7 +53,15 @@ li[data-item] .edit-item-tools, div[data-item] > p ~ .edit-item-tools { top: -4p
 .edit-img-btn:disabled { opacity: .7; cursor: wait; }
 .hero-bg > .edit-img-btn { left: auto; right: 16px; bottom: auto; top: 86px; transform: none; font-size: .85rem; padding: 8px 16px; }
 .logo-img > .edit-img-btn { bottom: 50%; transform: translate(-50%, 50%); padding: 4px 8px; font-size: .68rem; }
-.org-photo > .edit-img-btn { bottom: 50%; transform: translate(-50%, 50%); padding: 3px 7px; font-size: .6rem; }
+.avatar .edit-img-btn { bottom: 50%; transform: translate(-50%, 50%); padding: 3px 7px; font-size: .6rem; }
+.org-avatar .edit-img-btn { width: 24px; height: 24px; padding: 0; font-size: 0; border-radius: 50%; }
+.org-avatar .edit-img-btn::before { content: "📷"; font-size: .7rem; }
+body.editing .avatar:has(.img.missing)::after { display: none; }
+body.editing .org-division, body.editing .org-member { position: relative; }
+.org-division .edit-add-child { margin-top: 6px; }
+.org-head .edit-add-child { margin: 0 0 0 6px; }
+.org-member .edit-item-tools { top: -10px; right: -6px; }
+.org-division .edit-item-tools { top: -12px; right: -6px; }
 
 /* Galeri proyek: daftar foto */
 body.editing .gallery-item figcaption { position: static; background: none; color: var(--ink); padding: 12px 4px 0; }
@@ -98,3 +106,7 @@ a.edit-muted:hover { color: var(--primary); }
   .edit-bar-title small, .edit-btn-sm span { display: none; }
   .edit-btn-sm { padding: 8px 11px; }
 }
+
+/* Ikon layanan: tombol kamera kecil */
+.card-icon > .edit-img-btn { left: auto; right: 2px; bottom: 2px; transform: none; width: 22px; height: 22px; padding: 0; font-size: 0; border-radius: 50%; display: grid; place-items: center; }
+.card-icon > .edit-img-btn::before { content: "📷"; font-size: .65rem; }

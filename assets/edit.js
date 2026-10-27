@@ -241,13 +241,13 @@
 
     // Struktur organisasi: tambah bawahan di bawah setiap kotak
     document.querySelectorAll("[data-children]").forEach((node) => {
-      const b = make("button", "edit-ui edit-add-child", "+ Bawahan");
+      const b = make("button", "edit-ui edit-add-child", node.dataset.addLabel || "+ Bawahan");
       b.type = "button";
       b.onclick = (e) => {
         e.preventDefault();
         const p = node.dataset.children;
         if (!Array.isArray(getPath(p))) setPath(p, []);
-        getPath(p).push({ photo: "", name: "Nama Lengkap", role: "Jabatan", children: [] });
+        getPath(p).push(node.dataset.addLabel === "+ Bidang" ? { photo: "", name: "Nama Bidang", role: "", children: [] } : { photo: "", name: "Nama Lengkap", role: "", children: [] });
         setDirty(true);
         rerender();
       };

@@ -78,10 +78,19 @@
     </div>`;
   };
 
+  // Ikon layanan: emoji (bisa diketik) atau gambar yang diupload
+  const isImagePath = (v) => /^(images\/|data:|https?:|blob:)/.test(String(v || ""));
+  const serviceIcon = (path) => {
+    const v = get(path);
+    return isImagePath(v)
+      ? `<div class="card-icon has-img" data-img="${path}"><img src="${esc(shownSrc(v))}" alt="" loading="lazy"></div>`
+      : `<div class="card-icon" data-img="${path}">${T(path)}</div>`;
+  };
+
   const serviceCards = (limit) => {
     const items = (window.SITE.services.items || []).slice(0, limit || undefined);
     return `<div class="grid cards"${limit ? "" : ' data-list="services.items"'}>${items.map((_, i) => `
-      <article class="card reveal" data-item="services.items.${i}">${T(`services.items.${i}.icon`, "div", "card-icon")}${T(`services.items.${i}.title`, "h3")}${T(`services.items.${i}.text`, "p")}</article>`).join("")}
+      <article class="card reveal" data-item="services.items.${i}">${serviceIcon(`services.items.${i}.icon`)}${T(`services.items.${i}.title`, "h3")}${T(`services.items.${i}.text`, "p")}</article>`).join("")}
     </div>`;
   };
 
@@ -95,14 +104,34 @@
     </div>`;
   };
 
-  // Satu kotak di bagan organisasi (beserta bawahannya)
-  const orgNode = (node, p, isRoot) => `
+  /* ---------- Struktur organisasi: pimpinan → bidang → anggota ---------- */
+  const initials = (n) => String(n || "").trim().split(/\s+/).slice(0, 2).map((w) => w[0] || "").join("").toUpperCase();
+  // Foto bulat; jika belum ada foto, tampil inisial nama
+  const avatar = (p, name, cls) => `<div class="avatar ${cls}" data-initials="${esc(initials(name))}">${img(`${p}.photo`, name)}</div>`;
+  const opt = (path, tag) => (get(path) || editing() ? T(path, tag) : "");
+
+  const orgMember = (m, p) => `
+    <div class="org-member reveal" data-item="${p}">
+      ${avatar(p, m.name, "org-avatar")}
+      <div>${T(`${p}.name`, "strong")}${opt(`${p}.role`, "span")}</div>
+    </div>
+    ${m.children?.length ? `<div class="org-members sub">${m.children.map((c, k) => orgMember(c, `${p}.children.${k}`)).join("")}</div>` : ""}`;
+
+  const orgDivision = (d, p) => `
     <li>
-      <div class="org-node reveal"${isRoot ? "" : ` data-item="${p}"`} data-children="${p}.children">
-        ${img(`${p}.photo`, node.name, "org-photo")}${T(`${p}.name`, "h3")}${T(`${p}.role`, "p")}
-      </div>
-      ${node.children?.length ? `<ul>${node.children.map((ch, i) => orgNode(ch, `${p}.children.${i}`)).join("")}</ul>` : ""}
+      <div class="org-division reveal" data-item="${p}" data-children="${p}.children" data-add-label="+ Anggota">${T(`${p}.name`, "h4")}${opt(`${p}.role`, "small")}</div>
+      ${d.children?.length ? `<div class="org-members">${d.children.map((m, j) => orgMember(m, `${p}.children.${j}`)).join("")}</div>` : ""}
     </li>`;
+
+  const orgChart = (chart) => {
+    const P = "team.chart";
+    return `<div class="org-wrap"><ul class="org-tree"><li>
+      <div class="org-node org-head reveal" data-children="${P}.children" data-add-label="+ Bidang">
+        ${avatar(P, chart.name, "org-photo")}<div>${T(`${P}.name`, "h3")}${opt(`${P}.role`, "p")}</div>
+      </div>
+      ${chart.children?.length ? `<ul>${chart.children.map((d, i) => orgDivision(d, `${P}.children.${i}`)).join("")}</ul>` : ""}
+    </li></ul></div>`;
+  };
 
   /* ---------- Isi tiap halaman ---------- */
   const VIEWS = {
@@ -187,7 +216,7 @@
 
     proyek: () => `${banner("projects")}<section class="section"><div class="container">${projectCards()}</div></section>`,
 
-    tim: (S) => `${banner("team")}<section class="section"><div class="container"><div class="org-wrap"><ul class="org-tree">${orgNode(S.team.chart, "team.chart", true)}</ul></div></div></section>`,
+    tim: (S) => `${banner("team")}<section class="section"><div class="container">${orgChart(S.team.chart)}</div></section>`,
 
     kontak(S) {
       const k = S.contact;
