@@ -1,8 +1,6 @@
 /* =====================================================================
    KONTEN WEBSITE
    Cara termudah: buka website → klik "🔒 Admin" di footer → edit langsung.
-   Teks dua bahasa ditulis { "id": "…", "en": "…" }. Pilih ID/EN di menu atas
-   saat mode edit untuk mengubah versi bahasa tersebut.
    Foto ada di folder images/. Bagian dengan "hidden": true tidak ditampilkan.
    ===================================================================== */
 
@@ -396,16 +394,48 @@ window.SITE = {
     },
     "items": [
       {
-        "logo": "",
-        "name": "Nama Pelanggan"
+        "logo": "images/lapan-mvqfzg1i.png?v=mvqfzi3e",
+        "name": "Lembaga Penerbangan dan Antariksa Nasional"
       },
       {
-        "logo": "",
-        "name": "Nama Pelanggan"
+        "logo": "images/conoco-mvqg0gvm.png?v=mvqg0j9t",
+        "name": "ConocoPhillips (Grissik) Ltd"
       },
       {
-        "logo": "",
-        "name": "Nama Pelanggan"
+        "logo": "images/sttn-batan-mvqg15k4.png?v=mvqg17kj",
+        "name": "STTN Batan Yogyakarta"
+      },
+      {
+        "logo": "images/lemsaneg-mvqg1g2d.png?v=mvqg1i22",
+        "name": "Lembaga Sandi Negara"
+      },
+      {
+        "logo": "images/chevron-mvqg1vmo.png?v=mvqg1xvp",
+        "name": "Chevron Indonesia"
+      },
+      {
+        "logo": "images/hidros-mvqg2iod.png?v=mvqg2ksl",
+        "name": "Pushidrosal"
+      },
+      {
+        "logo": "images/bmkg-mvqg2vof.png?v=mvqg2xlj",
+        "name": "Badan Meteorologi, Klimatologi, dan Geofisika"
+      },
+      {
+        "logo": "images/diskomlekal-mvqg3jqi.png?v=mvqg3lt0",
+        "name": "Diskomlekal Mabes AL"
+      },
+      {
+        "logo": "images/brin-mvqg49mu.png?v=mvqg4bno",
+        "name": "Badan Riset dan Inovasi Nasional"
+      },
+      {
+        "logo": "images/basarnas-mvqg4jrt.png?v=mvqg4lty",
+        "name": "Badan Nasional Pencarian dan Pertolongan"
+      },
+      {
+        "logo": "images/balai-depok-mvqg56s6.png?v=mvqg58rb",
+        "name": "UPTD – Balai Benih Ikan Kota Depo, Jawa Barat"
       },
       {
         "logo": "",
