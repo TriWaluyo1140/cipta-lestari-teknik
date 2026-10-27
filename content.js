@@ -164,7 +164,7 @@ window.SITE = {
               "children": []
             },
             {
-              "photo": "",
+              "photo": "images/screenshot-2026-10-27-at-14-49-10-mvqdxk6j.png?v=mvqdxmue",
               "name": "Harun Jonathan",
               "role": "",
               "children": []
@@ -177,13 +177,13 @@ window.SITE = {
           "role": "",
           "children": [
             {
-              "photo": "",
+              "photo": "images/screenshot-2026-10-27-at-14-48-29-mvqdxsgp.png?v=mvqdxutx",
               "name": "Agus Mulyono",
               "role": "",
               "children": []
             },
             {
-              "photo": "",
+              "photo": "images/screenshot-2026-10-27-at-14-48-54-mvqdxyi7.png?v=mvqdy0a6",
               "name": "Liliek Riyono",
               "role": "",
               "children": []
