@@ -1,22 +1,12 @@
-/* Halaman admin: edit content.js & upload foto langsung ke GitHub lewat API.
-   Token hanya disimpan di browser (sessionStorage / localStorage), tidak pernah di-commit. */
+/* Halaman admin (pengaturan lengkap dalam bentuk form). Koneksi GitHub ada di github.js */
 
 const $ = (id) => document.getElementById(id);
-const API = "https://api.github.com";
-const CONTENT_PATH = "content.js";
+const cfg = GH.cfg;
 
-const store = {
-  get(k) { try { return sessionStorage.getItem(k) ?? localStorage.getItem(k); } catch { return null; } },
-  set(k, v, persist) { try { (persist ? localStorage : sessionStorage).setItem(k, v); } catch {} },
-  clear(k) { try { sessionStorage.removeItem(k); localStorage.removeItem(k); } catch {} },
-};
-
-let cfg = {};            // { token, owner, repo, branch }
 let data = null;         // objek window.SITE yang sedang diedit
 let contentSha = null;   // sha content.js terakhir (untuk mencegah tabrakan)
 let dirty = false;
 let activeTab = null;
-const previews = {};     // path foto → objectURL foto yang baru diupload
 
 /* ---------- Label bahasa Indonesia ---------- */
 const SECTION_LABELS = {
@@ -38,120 +28,54 @@ const COLOR_KEYS = ["primary", "accent"];
 const LONG_KEYS = ["description", "subtitle", "text", "quote", "vision", "address", "paragraphs", "mission"];
 const ALWAYS_ON = ["company", "theme"];
 
-/* ---------- GitHub API ---------- */
-async function gh(path, opts = {}) {
-  const res = await fetch(`${API}/repos/${cfg.owner}/${cfg.repo}${path}`, {
-    ...opts,
-    headers: { Authorization: `Bearer ${cfg.token}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", ...(opts.headers || {}) },
-  });
-  if (!res.ok) {
-    const err = new Error((await res.json().catch(() => ({}))).message || res.statusText);
-    err.status = res.status;
-    throw err;
-  }
-  return res.json();
-}
-const b64ToText = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
-const textToB64 = (txt) => bytesToB64(new TextEncoder().encode(txt));
-function bytesToB64(bytes) {
-  let bin = "";
-  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
-  return btoa(bin);
-}
-async function getSha(path) {
-  try { return (await gh(`/contents/${encodeURI(path)}?ref=${encodeURIComponent(cfg.branch)}`)).sha; }
-  catch (e) { if (e.status === 404) return undefined; throw e; }
-}
-async function putFile(path, b64, message, sha) {
-  return gh(`/contents/${encodeURI(path)}`, { method: "PUT", body: JSON.stringify({ message, content: b64, branch: cfg.branch, ...(sha ? { sha } : {}) }) });
-}
-
 /* ---------- Login ---------- */
-function guessRepo() {
-  const host = location.hostname;
-  if (!host.endsWith(".github.io")) return {};
-  const owner = host.split(".")[0];
-  const seg = location.pathname.split("/").filter(Boolean)[0];
-  return { owner, repo: seg && !seg.endsWith(".html") ? seg : `${owner}.github.io` };
-}
 function initLogin() {
-  const g = guessRepo();
-  $("owner").value = store.get("gh_owner") || g.owner || "";
-  $("repo").value = store.get("gh_repo") || g.repo || "";
-  $("branch").value = store.get("gh_branch") || "main";
+  $("owner").value = cfg.owner;
+  $("repo").value = cfg.repo;
+  $("branch").value = cfg.branch;
   const updateLabel = () => { $("repoLabel").textContent = $("owner").value && $("repo").value ? `${$("owner").value}/${$("repo").value}` : "belum diisi"; };
   ["owner", "repo"].forEach((id) => $(id).addEventListener("input", updateLabel));
   updateLabel();
   if (!$("owner").value || !$("repo").value) $("repoBox").open = true;
 
-  $("loginForm").addEventListener("submit", async (e) => {
+  $("loginForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    cfg = { token: $("token").value.trim(), owner: $("owner").value.trim(), repo: $("repo").value.trim(), branch: $("branch").value.trim() || "main" };
-    await unlock($("remember").checked);
+    unlock({ token: $("token").value.trim(), owner: $("owner").value.trim(), repo: $("repo").value.trim(), branch: $("branch").value.trim() || "main", remember: $("remember").checked });
   });
 
-  const saved = store.get("gh_token");
-  if (saved && $("owner").value && $("repo").value) {
-    cfg = { token: saved, owner: $("owner").value, repo: $("repo").value, branch: $("branch").value };
-    unlock(!!localStorage.getItem("gh_token"));
-  }
+  // Sudah buka kunci di halaman website / sebelumnya → langsung masuk
+  if (GH.hasToken && cfg.owner && cfg.repo) unlock({});
 }
-async function unlock(remember) {
+async function unlock(opts) {
   $("loginError").textContent = "";
   $("loginBtn").disabled = true;
   $("loginBtn").textContent = "Memeriksa…";
   try {
-    const repo = await gh("");
-    if (!repo.permissions?.push) throw Object.assign(new Error("Token ini tidak punya izin menulis ke repository."), { status: 403 });
-    await loadContent();
-    store.clear("gh_token");
-    store.set("gh_token", cfg.token, remember);
-    ["owner", "repo", "branch"].forEach((k) => store.set(`gh_${k}`, cfg[k], true));
+    await GH.unlock(opts);
+    const { site, sha } = await GH.loadContent();
+    contentSha = sha;
+    startEditor(site);
     $("login").hidden = true;
     $("editor").hidden = false;
     $("repoInfo").textContent = `${cfg.owner}/${cfg.repo} · ${cfg.branch}`;
   } catch (e) {
-    store.clear("gh_token");
-    $("loginError").textContent =
-      e.status === 401 ? "Token salah atau sudah kedaluwarsa." :
-      e.status === 404 ? "Repository/file tidak ditemukan, atau token tidak diberi akses ke repository ini." :
-      e.message;
+    $("loginError").textContent = GH.errorText(e);
   } finally {
     $("loginBtn").disabled = false;
     $("loginBtn").textContent = "Buka Kunci";
   }
 }
 
-/* ---------- Muat & simpan content.js ---------- */
-async function loadContent() {
-  const file = await gh(`/contents/${CONTENT_PATH}?ref=${encodeURIComponent(cfg.branch)}`);
-  contentSha = file.sha;
-  const sandbox = {};
-  try { new Function("window", b64ToText(file.content))(sandbox); }
-  catch (e) { throw new Error(`content.js tidak bisa dibaca (ada tanda baca yang rusak): ${e.message}`); }
-  if (!sandbox.SITE) throw new Error("content.js tidak berisi window.SITE.");
-  startEditor(sandbox.SITE);
-}
-function serialize(obj) {
-  return `/* =====================================================================
-   KONTEN WEBSITE
-   Edit lewat halaman admin.html (disarankan), atau langsung di file ini.
-   Foto ada di folder images/. Bagian dengan "hidden": true tidak ditampilkan.
-   ===================================================================== */
-
-window.SITE = ${JSON.stringify(obj, null, 2)};
-`;
-}
+/* ---------- Simpan content.js ---------- */
 async function save() {
   $("saveBtn").disabled = true;
   $("saveBtn").textContent = "Menyimpan…";
   try {
-    const res = await putFile(CONTENT_PATH, textToB64(serialize(data)), "Update konten website via admin", contentSha);
-    contentSha = res.content.sha;
+    contentSha = await GH.saveContent(data, contentSha);
     setDirty(false);
     toast("Tersimpan ✓ Website ter-update dalam ±1 menit.");
   } catch (e) {
-    toast(e.status === 409 ? "Konten diubah di tempat lain. Muat ulang halaman ini lalu ulangi." : `Gagal menyimpan: ${e.message}`, true);
+    toast(`Gagal menyimpan: ${GH.errorText(e)}`, true);
     $("saveBtn").disabled = false;
   } finally {
     $("saveBtn").textContent = "Simpan";
@@ -160,30 +84,6 @@ async function save() {
 function setDirty(v) {
   dirty = v;
   $("saveBtn").disabled = !v;
-}
-
-/* ---------- Upload foto ---------- */
-const slug = (s) => s.toLowerCase().replace(/\.[^.]+$/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "foto";
-async function compress(file, wantPng) {
-  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return { blob: file, ext: file.name.split(".").pop().toLowerCase() };
-  const bmp = await createImageBitmap(file);
-  const scale = Math.min(1, 1920 / Math.max(bmp.width, bmp.height));
-  const canvas = Object.assign(document.createElement("canvas"), { width: Math.round(bmp.width * scale), height: Math.round(bmp.height * scale) });
-  canvas.getContext("2d").drawImage(bmp, 0, 0, canvas.width, canvas.height);
-  const type = wantPng ? "image/png" : "image/jpeg";
-  const blob = await new Promise((r) => canvas.toBlob(r, type, 0.85));
-  return { blob, ext: wantPng ? "png" : "jpg" };
-}
-async function uploadImage(file, currentPath, key) {
-  // Logo tetap PNG agar latar transparan tidak hilang
-  const wantPng = key === "logo" || /\.png$/i.test(currentPath || "") || (file.type === "image/png" && !currentPath);
-  const { blob, ext } = await compress(file, wantPng);
-  let path = currentPath && currentPath.startsWith("images/") ? currentPath : `images/${slug(file.name)}.${ext}`;
-  path = path.replace(/\.[^./]+$/, `.${ext}`);
-  const b64 = bytesToB64(new Uint8Array(await blob.arrayBuffer()));
-  await putFile(path, b64, `Upload foto ${path} via admin`, await getSha(path));
-  previews[path] = URL.createObjectURL(blob);
-  return path;
 }
 
 /* ---------- Form editor ---------- */
@@ -296,12 +196,12 @@ function renderImage(parent, key, k) {
 
   const draw = () => {
     const p = parent[key];
-    code.textContent = p || "(belum ada foto)";
+    code.textContent = p ? p.split("?")[0] : "(belum ada foto)";
     thumb.innerHTML = "";
     if (!p) { thumb.textContent = "Belum ada"; return; }
     const img = document.createElement("img");
-    const raw = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}/${p}`;
-    img.src = previews[p] || `${p}?t=${Date.now()}`;
+    const raw = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}/${p.split("?")[0]}`;
+    img.src = GH.previews[p] || p;
     img.onerror = () => { if (img.src !== raw) img.src = raw; else thumb.textContent = "Belum diupload"; };
     thumb.appendChild(img);
   };
@@ -311,7 +211,7 @@ function renderImage(parent, key, k) {
     upBtn.disabled = true;
     upBtn.textContent = "Mengupload…";
     try {
-      const path = await uploadImage(f, parent[key], k);
+      const path = await GH.uploadImage(f, parent[key], k);
       if (parent[key] !== path) { parent[key] = path; setDirty(true); }
       draw();
       toast(dirty ? "Foto terupload ✓ Klik Simpan untuk menerapkan." : "Foto terupload ✓ Website ter-update dalam ±1 menit.");
@@ -407,7 +307,7 @@ function toast(msg, isErr) {
 $("saveBtn").onclick = save;
 $("logoutBtn").onclick = () => {
   if (dirty && !confirm("Ada perubahan yang belum disimpan. Tetap kunci?")) return;
-  store.clear("gh_token");
+  GH.forget();
   location.reload();
 };
 addEventListener("beforeunload", (e) => { if (dirty) e.preventDefault(); });

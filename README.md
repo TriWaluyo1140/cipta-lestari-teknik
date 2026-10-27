@@ -34,12 +34,15 @@ Buka `https://alamat-website-anda/admin.html`. Halaman ini **terkunci**: hanya b
 4. *Permissions* → *Repository permissions* → **Contents: Read and write**.
 5. **Generate token**, salin (diawali `github_pat_…`), simpan di tempat aman.
 
-**Memakai admin:**
+**Edit langsung di halaman website:**
+- Buka website → gulir ke paling bawah → klik **🔒 Admin** (atau buka `alamat-website/#edit`).
 - Tempel token → **Buka Kunci**. Centang *Ingat di perangkat ini* hanya di komputer pribadi.
-- Pilih bagian di menu kiri, ubah teks, tambah/hapus/urutkan item, matikan bagian dengan saklar *Tampilkan di website*.
-- **📷 Upload / ganti foto** langsung mengunggah ke folder `images/` (otomatis diperkecil maks. 1920px).
-- Klik **Simpan** (atau Ctrl/⌘+S). Website ter-update dalam ±1 menit.
-- Klik **Kunci** setelah selesai, terutama di komputer bersama.
+- **Klik teks mana saja** (judul, nama tim, layanan, alamat, dll.) lalu ketik langsung.
+- **📷 Ganti foto** pada setiap foto untuk upload (otomatis diperkecil maks. 1920px).
+- **+ Tambah**, **◀ ▶** (geser urutan), **✕** (hapus) untuk layanan, proyek, tim, klien, testimoni.
+- Saklar **Tampil** di pojok kiri tiap bagian untuk menyembunyikan/menampilkan bagian.
+- Klik **Simpan** di bilah bawah (atau Ctrl/⌘+S). Pengunjung melihat perubahan dalam ±1 menit.
+- **⚙️ Pengaturan** membuka `admin.html` untuk hal yang tidak terlihat di halaman: logo, warna, link tombol, media sosial, nomor WhatsApp, peta.
 
 Keamanan:
 - Token **tidak pernah** disimpan ke repository/website — hanya di browser Anda. Siapa pun yang membuka `admin.html` tanpa token tidak bisa mengubah apa pun.
