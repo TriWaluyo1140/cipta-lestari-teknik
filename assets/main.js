@@ -199,10 +199,6 @@
       } else {
         html += `<div class="hero-spacer"></div>`;
       }
-      if (S.stats?.length || (editing() && S.stats)) {
-        html += `<div class="container"><div class="stats" data-list="stats">${S.stats.map((_, i) => `
-          <div class="stat" data-item="stats.${i}">${T(`stats.${i}.value`, "strong")}${T(`stats.${i}.label`)}</div>`).join("")}</div></div>`;
-      }
       if (on("services") && !S.services.hidden) {
         html += `<section class="section"><div class="container">${head("services")}${serviceCards(3)}${more("#layanan", ui("moreServices"))}</div></section>`;
       }
@@ -325,7 +321,7 @@
     /* ---------- Navigasi ---------- */
     const links = pages.map((p) => `<a href="#${p.id}"${p.id === page ? ' class="active"' : ""}>${ui(p.id)}</a>`).join("");
     navLinks.innerHTML = links;
-    langSwitch.innerHTML = LANGS.map((l) => `<button type="button" data-lang="${l}"${l === lang ? ' class="on"' : ""}>${l.toUpperCase()}</button>`).join("");
+    if (langSwitch) langSwitch.innerHTML = LANGS.map((l) => `<button type="button" data-lang="${l}"${l === lang ? ' class="on"' : ""}>${l.toUpperCase()}</button>`).join("");
 
     const k = S.contact;
     const wa = k?.whatsapp ? `https://wa.me/${String(tr(k.whatsapp)).replace(/\D/g, "")}` : "";
@@ -334,11 +330,13 @@
     f.hidden = !wa || !on("contact");
 
     /* ---------- Footer ---------- */
+    // Media sosial hanya tampil jika link akun sudah diisi (link bawaan seperti "https://instagram.com/" disembunyikan)
+    const social = (S.social || []).filter((s) => s.url && !/^https?:\/\/(www\.)?[^/]+\/?(company\/?)?$/i.test(String(s.url).trim()));
     document.getElementById("footer").innerHTML = `
       <div class="container footer-inner">
         <div><strong>${esc(c.name)}</strong><p>${esc(c.tagline)}</p></div>
         <div class="footer-links">${links}</div>
-        ${S.social?.length ? `<div class="social">${S.social.map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join("")}</div>` : ""}
+        ${social.length ? `<div class="social">${social.map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join("")}</div>` : ""}
       </div>
       <div class="container copyright"><a class="admin-link" href="#edit" id="adminLink" title="Edit website" aria-label="Edit website">🔒 Admin</a><span>© ${new Date().getFullYear()} ${esc(c.name)}. ${ui("rights")}</span></div>`;
 
@@ -389,7 +387,7 @@
   const navLinks = document.getElementById("navLinks");
   const nav = document.getElementById("nav");
   const langSwitch = document.getElementById("langSwitch");
-  langSwitch.onclick = (e) => { const b = e.target.closest("[data-lang]"); if (b && b.dataset.lang !== lang) setLang(b.dataset.lang); };
+  if (langSwitch) langSwitch.onclick = (e) => { const b = e.target.closest("[data-lang]"); if (b && b.dataset.lang !== lang) setLang(b.dataset.lang); };
   document.getElementById("navToggle").onclick = () => nav.classList.toggle("open");
   navLinks.onclick = (e) => { if (e.target.tagName === "A") nav.classList.remove("open"); };
   const onScroll = () => nav.classList.toggle("scrolled", scrollY > 40);
