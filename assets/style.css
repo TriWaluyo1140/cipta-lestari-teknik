@@ -222,3 +222,21 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
   .lb-nav { width: 40px; height: 40px; font-size: 1.4rem; }
   .lb-prev { left: 8px; } .lb-next { right: 8px; }
 }
+
+/* ---------- Halaman per menu ---------- */
+.nav-links a.active { color: var(--primary) !important; }
+.page-banner { position: relative; padding: 150px 0 72px; text-align: center; background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--primary) 28%, transparent), transparent 65%), var(--bg-alt); border-bottom: 1px solid var(--line); }
+.page-banner h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; font-weight: 800; letter-spacing: -.02em; }
+.page-banner h1::after { content: ""; display: block; width: 56px; height: 4px; border-radius: 4px; background: var(--primary); margin: 18px auto 0; }
+.page-banner .lead { color: var(--muted); margin: 16px auto 0; max-width: 620px; }
+.hero-spacer { height: 120px; }
+.more { text-align: center; margin-top: 40px; }
+.btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.btn-outline:hover { background: var(--primary); color: #0a0a0a; }
+.cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 40px 44px; border-radius: var(--radius); background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--primary) 35%, transparent), transparent 60%), var(--card); border: 1px solid var(--line); border-left: 4px solid var(--primary); }
+.cta h2::after { display: none; }
+.cta p { color: var(--muted); margin-top: 8px; }
+@media (max-width: 560px) {
+  .page-banner { padding: 120px 0 52px; }
+  .cta { padding: 28px 24px; }
+}

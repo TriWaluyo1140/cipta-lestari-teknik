@@ -26,7 +26,7 @@ body.editing .gallery-item { cursor: default; }
 
 /* Label bagian + saklar tampil */
 .edit-sec-bar { position: absolute; top: 14px; left: 16px; z-index: 6; display: flex; align-items: center; gap: 12px; padding: 6px 12px 6px 14px; border-radius: 999px; background: rgba(0,0,0,.8); border: 1px solid #3f3f46; font-size: .8rem; font-weight: 700; }
-.hero > .edit-sec-bar { top: 86px; }
+.hero > .edit-sec-bar, .page-banner > .edit-sec-bar { top: 86px; }
 .edit-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500; color: #d4d4d8; }
 .edit-toggle input { display: none; }
 .edit-toggle i { width: 34px; height: 19px; border-radius: 99px; background: #3f3f46; position: relative; transition: .2s; }
