@@ -52,8 +52,8 @@ window.SITE = {
   "about": {
     "title": "Tentang Kami",
     "paragraphs": [
-      "Tuliskan sejarah singkat perusahaan, kapan berdiri, dan apa yang membuat perusahaan Anda berbeda.",
-      "Paragraf kedua bisa berisi komitmen, nilai perusahaan, atau sertifikasi yang dimiliki."
+      "Salam Sejahtera, PT. Cipta Lestari Teknik berdiri pada tahun 2012 pada bidang Komputer dan Suku Cadangnya, Piranti Lunak - Alat Telekmunikasi, Perlengkapan Elektronik - Alat Teknik / Mekanikal / Elektrikal / Alat Ukur / Alat Navigasi / Alat Survei / Keselamatan Kerja / Alat Transportasi Laut, Darat, Udara dan Suku Cadangnya - Tekstil / Pakaian Jadi / Perlengkapan TNI / Polri (Bukan Amunisi) - Alat Laboratorium / Kesehatan / Bahan Kimia. ",
+      "Dengan berbekal pengalaman sejak tahun 2012 dan seiring dengan persaingan dibidang usaha, kami terus meningkatkan kinerja kami dengan tujuan untuk memberikan kepuasan pelanggan dalam menghadapi persaingan bisnis yang semakin kompetitif. Dengan ini kami PT. Cipta Lestari Teknik siap menjadi mitra kerja bagi lembaga / perusahaan anda."
     ],
     "image": "images/about.jpg",
     "vision": "Tuliskan visi perusahaan di sini.",
