@@ -8,7 +8,7 @@ window.SITE = {
   "company": {
     "name": "PT. CIPTA LESTARI TEKNIK",
     "shortName": "CLT",
-    "logo": "images/logo.png?v=mvqgt0vg",
+    "logo": "images/logo.png?v=mvqgvtrn",
     "tagline": {
       "id": "Solusi terpercaya untuk bisnis Anda",
       "en": "Your trusted solution for your business"
