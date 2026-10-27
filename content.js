@@ -31,7 +31,7 @@ window.SITE = {
       "id": "Kami menyediakan layanan profesional dengan standar kualitas tinggi sejak tahun 2012.",
       "en": "We have provided professional services with high quality standards since 2012."
     },
-    "image": "images/hero.jpg",
+    "image": "images/hero.jpg?v=mvqg9f3u",
     "buttons": [
       {
         "label": {
