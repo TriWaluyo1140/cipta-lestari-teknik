@@ -147,29 +147,61 @@ window.SITE = {
       "role": "Direktur Utama",
       "children": [
         {
-          "photo": "images/tim-2.jpg?v=mvqazfg7",
-          "name": "Tri Waluyo",
-          "role": "Direktur Operasional",
-          "children": []
-        },
-        {
           "photo": "images/tim-3.jpg",
           "name": "Tim Proyek",
           "role": "Direktur Keuangan",
           "children": [
             {
               "photo": "",
-              "name": "Nama Lengkap",
-              "role": "Jabatan",
+              "name": "Tri Waluyo",
+              "role": "",
+              "children": []
+            },
+            {
+              "photo": "",
+              "name": "Bonardo TS",
+              "role": "",
+              "children": []
+            },
+            {
+              "photo": "",
+              "name": "Harun Jonathan",
+              "role": "",
               "children": []
             }
           ]
         },
         {
           "photo": "",
-          "name": "Nama Lengkap",
+          "name": "Teknisi",
           "role": "Jabatan",
-          "children": []
+          "children": [
+            {
+              "photo": "",
+              "name": "Agus Mulyono",
+              "role": "",
+              "children": []
+            },
+            {
+              "photo": "",
+              "name": "Liliek Riyono",
+              "role": "",
+              "children": []
+            }
+          ]
+        },
+        {
+          "photo": "",
+          "name": "Keuangan ",
+          "role": "Jabatan",
+          "children": [
+            {
+              "photo": "",
+              "name": "Meinar W",
+              "role": "",
+              "children": []
+            }
+          ]
         }
       ]
     }
