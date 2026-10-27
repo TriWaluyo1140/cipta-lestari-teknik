@@ -9,9 +9,91 @@
   <link rel="icon" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="htt<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=15">
-  <link rel="stylesheet" href="assets/edit.css?v=15">
+  <link rel="stylesheet" href="assets/admin.css?v=16">
+</head>
+<body>
+  <!-- ========== Layar kunci ========== -->
+  <section class="login" id="login">
+    <form class="login-card" id="loginForm" autocomplete="off">
+      <div class="lock">🔒</div>
+      <h1>Admin Website</h1>
+      <p class="muted">Masuk dengan token GitHub yang punya izin tulis ke repository website ini.</p>
+
+      <label>Token GitHub
+        <input type="password" id="token" placeholder="github_pat_…" required>
+      </label>
+      <details id="repoBox">
+        <summary>Repository: <b id="repoLabel">—</b></summary>
+        <div class="row3">
+          <label>Pemilik / akun<input id="owner" required></label>
+          <label>Nama repo<input id="repo" required></label>
+          <label>Branch<input id="branch" value="main" required></label>
+        </div>
+      </details>
+      <label class="check"><input type="checkbox" id="remember"> Ingat di perangkat ini</label>
+      <button class="btn" type="submit" id="loginBtn">Buka Kunci</button>
+      <p class="error" id="loginError"></p>
+
+      <details class="help">
+        <summary>Cara membuat token</summary>
+        <ol>
+          <li>Buka <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token baru</a>.</li>
+          <li><b>Repository access</b>: <i>Only select repositories</i> → pilih repo website ini.</li>
+          <li><b>Permissions → Contents</b>: <i>Read and write</i>.</li>
+          <li>Klik <b>Generate token</b>, salin, lalu tempel di atas.</li>
+        </ol>
+        <p class="muted">Token hanya disimpan di browser ini, tidak pernah ikut ke website. Jangan bagikan token ke orang lain.</p>
+      </details>
+    </form>
+  </section>
+
+  <!-- ========== Editor ========== -->
+  <section class="editor" id="editor" hidden>
+    <header class="topbar">
+      <div class="topbar-title"><span class="dot"></span> <b>Admin</b> <span class="muted" id="repoInfo"></span></div>
+      <div class="topbar-actions">
+        <a class="btn-sm" href="./" target="_blank" rel="noopener">Lihat website ↗</a>
+        <button class="btn-sm" id="logoutBtn">Kunci</button>
+        <button class="btn" id="saveBtn" disabled>Simpan</button>
+      </div>
+    </header>
+    <div class="layout">
+      <nav class="tabs" id="tabs"></nav>
+      <main class="panel" id="panel"></main>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="assets/github.js?v=16"></script>
+  <script src="assets/admin.js?v=16"></script>
+</body>
+</html>
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Memuat…</title>
+  <meta name="description" content="">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=16">
+  <link rel="stylesheet" href="assets/edit.css?v=16">
 </head>
 <body>
   <header class="nav" id="nav">
@@ -38,9 +120,44 @@
     <p class="lightbox-caption"></p>
   </div>
 
-  <script src="content.js?v=15"></script>
-  <script src="assets/github.js?v=15"></script>
-  <script src="assets/main.js?v=15"></script>
-  <script src="assets/edit.js?v=15"></script>
+  <script src="content.js?v=16"></script>
+  <script src="assets/github.js?v=16"></script>
+  <script src="assets/main.js?v=16"></script>
+  <script src="assets/edit.js?v=16"></script>
+</body>
+</html>
+ps://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=16">
+  <link rel="stylesheet" href="assets/edit.css?v=16">
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#beranda" class="brand" id="brand"></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu"><span></span><span></span><span></span></button>
+      <nav class="nav-links" id="navLinks"></nav>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <a class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="Chat WhatsApp" hidden>
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zm8.4-18.2C18.1 1.3 15.2.1 12 .1 5.5.1.1 5.4.1 12c0 2.1.5 4.1 1.6 5.9L0 24l6.3-1.6c1.7.9 3.7 1.4 5.7 1.4 6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.5-8.3z"/></svg>
+  </a>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox-close" aria-label="Tutup">×</button>
+    <button class="lb-nav lb-prev" aria-label="Foto sebelumnya">‹</button>
+    <img alt="">
+    <button class="lb-nav lb-next" aria-label="Foto berikutnya">›</button>
+    <p class="lightbox-caption"></p>
+  </div>
+
+  <script src="content.js?v=16"></script>
+  <script src="assets/github.js?v=16"></script>
+  <script src="assets/main.js?v=16"></script>
+  <script src="assets/edit.js?v=16"></script>
 </body>
 </html>
