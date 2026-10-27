@@ -110,7 +110,7 @@ window.SITE = ${JSON.stringify(site, null, 2)};
   // Mengembalikan path baru, mis. "images/tim-1.jpg?v=lq3x9" (?v= agar browser tidak memakai foto lama)
   async function uploadImage(file, currentPath, key) {
     const current = (currentPath || "").split("?")[0];
-    const wantPng = key === "logo" || /\.png$/i.test(current) || (file.type === "image/png" && !current);
+    const wantPng = key === "logo" || key === "icon" || /\.png$/i.test(current) || (file.type === "image/png" && !current);
     const { blob, ext } = await compress(file, wantPng);
     let path = current.startsWith("images/") ? current : `images/${slug(file.name)}-${Date.now().toString(36)}.${ext}`;
     path = path.replace(/\.[^./]+$/, `.${ext}`);
