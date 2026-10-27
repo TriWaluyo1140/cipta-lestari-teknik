@@ -190,7 +190,8 @@ window.SITE = {
         "image": "images/klien-5.png",
         "name": "Klien 5"
       }
-    ]
+    ],
+    "hidden": true
   },
   "testimonials": {
     "title": "Apa Kata Klien",
@@ -210,7 +211,8 @@ window.SITE = {
         "name": "Nama Klien",
         "company": "CV Contoh Tiga"
       }
-    ]
+    ],
+    "hidden": true
   },
   "contact": {
     "title": "Hubungi Kami",
