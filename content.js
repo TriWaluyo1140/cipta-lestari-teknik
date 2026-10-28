@@ -246,14 +246,15 @@ window.SITE = {
       {
         "title": {
           "id": "Nama Proyek 6",
-          "en": "Project Name 6"
+          "en": "Pengadaan Peralatan Planetarium Mobile"
         },
         "category": {
           "id": "Kategori",
-          "en": "Category"
+          "en": "Pengadaan "
         },
         "images": [
-          "images/proyek-6.jpg"
+          "images/20141210-143530-mvrnbxzv.jpg?v=mvrnc0fa",
+          "images/20141216-090852-mvrnc0gi.jpg?v=mvrnc3h5"
         ]
       }
     ]
