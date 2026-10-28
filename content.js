@@ -245,19 +245,6 @@ window.SITE = {
       },
       {
         "title": {
-          "id": "Nama Proyek 5",
-          "en": "Project Name 5"
-        },
-        "category": {
-          "id": "Kategori",
-          "en": "Category"
-        },
-        "images": [
-          "images/proyek-5.jpg"
-        ]
-      },
-      {
-        "title": {
           "id": "Nama Proyek 6",
           "en": "Project Name 6"
         },
