@@ -216,14 +216,16 @@ window.SITE = {
       {
         "title": {
           "id": "Nama Proyek 2",
-          "en": "Project Name 2"
+          "en": "Pembuatan Telescope 0,5 meter"
         },
         "category": {
           "id": "Kategori",
-          "en": "Category"
+          "en": "Pengadaan"
         },
         "images": [
-          "images/proyek-2.jpg"
+          "images/img-20170201-115526-mvrns1cn.jpg?v=mvrns4ta",
+          "images/img-20170221-144235-mvrns50f.jpg?v=mvrns81q",
+          "images/img-20170221-144529-mvrns881.jpg?v=mvrnsann"
         ]
       },
       {
