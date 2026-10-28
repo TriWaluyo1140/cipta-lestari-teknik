@@ -229,14 +229,18 @@ window.SITE = {
       {
         "title": {
           "id": "Nama Proyek 4",
-          "en": "Project Name 4"
+          "en": "Pemeliharaan Antena NPP - Balikpapan"
         },
         "category": {
           "id": "Kategori",
-          "en": "Category"
+          "en": "PEMELIHARAAN SISTEM"
         },
         "images": [
-          "images/proyek-4.jpg"
+          "images/img-20180829-124818-mvriuuw2.jpg?v=mvriuxj2",
+          "images/img-20180829-130104-mvriuxsn.jpg?v=mvriv0dg",
+          "images/img-20180829-130321-mvriv0nk.jpg?v=mvriv3hu",
+          "images/img-20180829-141302-mvriv3sw.jpg?v=mvriv73q",
+          "images/img-20180829-141515-mvriv7ff.jpg?v=mvrivab2"
         ]
       },
       {
