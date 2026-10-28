@@ -170,7 +170,7 @@ window.SITE = {
         }
       },
       {
-        "icon": "⭐",
+        "icon": "images/screenshot-2026-10-28-at-09-45-10-mvrii3ma.png?v=mvrii6j4",
         "title": {
           "id": "Layanan Baru",
           "en": "AI-Based Systems"
