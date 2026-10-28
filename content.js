@@ -146,6 +146,17 @@ window.SITE = {
           "id": "Penjelasan singkat tentang layanan ini, 1–2 kalimat.",
           "en": "Water Treatment"
         }
+      },
+      {
+        "icon": "images/screenshot-2026-10-28-at-09-33-57-mvri4ts6.png?v=mvri4vqz",
+        "title": {
+          "id": "Layanan Baru",
+          "en": "WITHUS"
+        },
+        "text": {
+          "id": "Keterangan singkat layanan.",
+          "en": "Development and integration house specialized in space technology"
+        }
       }
     ]
   },
