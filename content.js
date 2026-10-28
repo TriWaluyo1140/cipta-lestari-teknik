@@ -157,6 +157,28 @@ window.SITE = {
           "id": "Keterangan singkat layanan.",
           "en": "Development and integration house specialized in space technology"
         }
+      },
+      {
+        "icon": "images/ni-mvri8i03.png?v=mvri8k0s",
+        "title": {
+          "id": "Layanan Baru",
+          "en": "National Instruments"
+        },
+        "text": {
+          "id": "Keterangan singkat layanan.",
+          "en": "Test and measurement systems"
+        }
+      },
+      {
+        "icon": "⭐",
+        "title": {
+          "id": "Layanan Baru",
+          "en": "AI-Based Systems"
+        },
+        "text": {
+          "id": "Keterangan singkat layanan.",
+          "en": "Creation and Development of AI-Based Systems"
+        }
       }
     ]
   },
