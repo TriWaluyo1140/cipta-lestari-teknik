@@ -304,6 +304,7 @@
     const root = document.documentElement.style;
     if (S.theme?.primary) root.setProperty("--primary", S.theme.primary);
     if (S.theme?.accent) root.setProperty("--accent", S.theme.accent);
+    root.setProperty("--brand-c", c.nameColor || "#D4A84B"); // warna nama perusahaan (default emas)
     const name = tr(c.name);
     document.title = page === "beranda" ? (c.tagline ? `${name} — ${tr(c.tagline)}` : name || "Website") : `${ui(page)} — ${name}`;
     document.querySelector('meta[name="description"]').content = tr(c.description) || "";

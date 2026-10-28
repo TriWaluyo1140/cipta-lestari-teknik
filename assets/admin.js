@@ -16,7 +16,7 @@ const SECTION_LABELS = {
 };
 const LABELS = {
   name: "Nama", shortName: "Singkatan (tampil jika logo kosong)", logo: "Logo", tagline: "Tagline",
-  description: "Deskripsi untuk Google (maks. 160 karakter)", primary: "Warna utama", accent: "Warna aksen",
+  description: "Deskripsi untuk Google (maks. 160 karakter)", primary: "Warna utama", accent: "Warna aksen", nameColor: "Warna nama perusahaan",
   title: "Judul", subtitle: "Subjudul", image: "Foto", photo: "Foto", buttons: "Tombol", label: "Teks tombol",
   href: "Link", value: "Angka", paragraphs: "Paragraf", vision: "Visi", mission: "Misi", items: "Daftar",
   icon: "Ikon (emoji)", text: "Keterangan", category: "Kategori", role: "Jabatan", logos: "Logo", id: "Bahasa Indonesia", en: "English", images: "Foto-foto", chart: "Struktur Organisasi", children: "Bawahan",
@@ -24,7 +24,7 @@ const LABELS = {
   whatsapp: "Nomor WhatsApp (format 62…)", hours: "Jam operasional", mapEmbed: "Link embed Google Maps", url: "Link",
 };
 const IMAGE_KEYS = ["image", "images", "photo", "logo"];
-const COLOR_KEYS = ["primary", "accent"];
+const COLOR_KEYS = ["primary", "accent", "nameColor"];
 const LONG_KEYS = ["description", "subtitle", "text", "quote", "vision", "address", "paragraphs", "mission"];
 const ALWAYS_ON = ["company", "theme"];
 

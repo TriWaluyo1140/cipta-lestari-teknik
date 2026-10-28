@@ -173,6 +173,14 @@
     if (!editing()) return;
     bar.querySelector(".edit-lang").textContent = (window.siteLang?.() || "id").toUpperCase();
 
+    // Tombol 🎨 untuk mengubah warna nama perusahaan
+    const brand = document.getElementById("brand");
+    const cb = make("button", "edit-ui edit-color-btn", "🎨");
+    cb.type = "button";
+    cb.title = "Ubah warna nama perusahaan";
+    cb.onclick = (e) => { e.preventDefault(); e.stopPropagation(); togglePalette(cb); };
+    brand.appendChild(cb);
+
     document.querySelectorAll("[data-edit]").forEach((el) => {
       try { el.contentEditable = "plaintext-only"; } catch { el.contentEditable = "true"; }
       el.spellcheck = false;
@@ -299,6 +307,34 @@
     };
     input.click();
   }
+
+  /* ---------- Pilihan warna nama perusahaan ---------- */
+  const SWATCHES = [["Emas", "#D4A84B"], ["Perak", "#C8CCD2"], ["Perunggu", "#C27C3E"], ["Orange", "#FF7A00"], ["Putih", "#FFFFFF"], ["Merah", "#D63C3C"], ["Biru", "#3B82F6"]];
+  const palette = make("div", "edit-ui edit-palette");
+  palette.hidden = true;
+  palette.innerHTML = `<p>Warna nama perusahaan</p>
+    <div class="edit-swatches">${SWATCHES.map(([n, c]) => `<button type="button" data-c="${c}" title="${n}" style="--c:${c}"></button>`).join("")}</div>
+    <label class="edit-custom">Warna lain <input type="color"></label>`;
+  document.body.appendChild(palette);
+  function applyColor(c) {
+    window.SITE.company.nameColor = c.toUpperCase();
+    document.documentElement.style.setProperty("--brand-c", c);
+    palette.querySelectorAll("[data-c]").forEach((b) => b.classList.toggle("on", b.dataset.c.toLowerCase() === c.toLowerCase()));
+    setDirty(true);
+  }
+  palette.addEventListener("click", (e) => { const b = e.target.closest("[data-c]"); if (b) applyColor(b.dataset.c); });
+  palette.querySelector("input").addEventListener("input", (e) => applyColor(e.target.value));
+  function togglePalette(btn) {
+    if (!palette.hidden) return (palette.hidden = true);
+    const r = btn.getBoundingClientRect();
+    palette.style.top = `${r.bottom + 10}px`;
+    palette.style.left = `${Math.max(8, Math.min(r.left - 20, innerWidth - 248))}px`;
+    const cur = window.SITE.company?.nameColor || "#D4A84B";
+    palette.querySelector("input").value = /^#[0-9a-f]{6}$/i.test(cur) ? cur : "#d4a84b";
+    palette.querySelectorAll("[data-c]").forEach((b) => b.classList.toggle("on", b.dataset.c.toLowerCase() === cur.toLowerCase()));
+    palette.hidden = false;
+  }
+  document.addEventListener("click", (e) => { if (!palette.hidden && !e.target.closest(".edit-palette, .edit-color-btn")) palette.hidden = true; });
 
   function pickImages(path, btn) {
     const input = Object.assign(document.createElement("input"), { type: "file", accept: "image/*", multiple: true });

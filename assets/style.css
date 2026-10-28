@@ -28,7 +28,20 @@ a { color: var(--primary); text-decoration: none; }
 .nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .3s, box-shadow .3s; }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
 .nav.scrolled, .nav.open { background: rgba(10,10,10,.88); backdrop-filter: blur(10px); box-shadow: 0 1px 0 var(--line); }
-.brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.1rem; }
+.brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.15rem; }
+/* Nama perusahaan: efek logam 3D, warna dasar dari --brand-c (bisa diubah di mode edit) */
+.brand-name {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--brand-c) 25%, #fff) 0%,
+    var(--brand-c) 38%,
+    color-mix(in srgb, var(--brand-c) 55%, #000) 52%,
+    var(--brand-c) 68%,
+    color-mix(in srgb, var(--brand-c) 40%, #fff) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent; caret-color: #fff;
+  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--brand-c) 45%, #000)) drop-shadow(0 1px 0 color-mix(in srgb, var(--brand-c) 25%, #000)) drop-shadow(0 2px 3px rgba(0,0,0,.55));
+  letter-spacing: .01em;
+}
 .nav.scrolled .brand, .nav.open .brand { color: var(--ink); }
 .brand-logo { position: relative; display: flex; }
 .brand-logo img { height: 40px; width: auto; }

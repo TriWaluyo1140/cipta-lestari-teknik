@@ -122,3 +122,14 @@ body.editing .client-card { position: relative; }
 .brand-logo > .edit-img-btn::before { content: "📷"; font-size: .7rem; }
 body.editing .brand { cursor: default; }
 body.editing .brand-name { padding: 0 4px; }
+
+/* Pilihan warna nama perusahaan */
+.edit-color-btn { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1px solid #3f3f46; background: rgba(0,0,0,.7); font-size: .8rem; cursor: pointer; }
+.edit-color-btn:hover { border-color: var(--primary); }
+.edit-palette { position: fixed; z-index: 90; width: 240px; padding: 14px; border-radius: 14px; background: #18181b; border: 1px solid #3f3f46; box-shadow: 0 14px 40px rgba(0,0,0,.6); font-size: .82rem; }
+.edit-palette p { font-weight: 700; margin-bottom: 10px; }
+.edit-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.edit-swatches button { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #3f3f46; background: linear-gradient(180deg, color-mix(in srgb, var(--c) 35%, #fff), var(--c) 50%, color-mix(in srgb, var(--c) 55%, #000)); cursor: pointer; }
+.edit-swatches button.on, .edit-swatches button:hover { border-color: #fff; }
+.edit-custom { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; color: #a1a1aa; }
+.edit-custom input { width: 44px; height: 30px; padding: 2px; border: 1px solid #3f3f46; border-radius: 8px; background: #0a0a0a; cursor: pointer; }
