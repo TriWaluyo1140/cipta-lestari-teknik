@@ -122,7 +122,8 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .card p { color: var(--muted); font-size: .95rem; }
 
 /* ---------- Galeri ---------- */
-.gallery { grid-template-columns: repeat(3, 1fr); }
+.gallery { display: flex; flex-wrap: wrap; justify-content: center; }
+.gallery > .gallery-item { flex: 0 0 calc((100% - 48px) / 3); }
 .gallery-item { position: relative; border-radius: var(--radius); overflow: hidden; cursor: zoom-in; }
 .slides { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--card); }
 .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
@@ -134,9 +135,9 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .dots i.on { width: 18px; border-radius: 4px; background: var(--primary); }
 .gallery-item img { transition: transform .5s; }
 .gallery-item:hover img { transform: scale(1.06); }
-.gallery-item figcaption { z-index: 3; position: absolute; inset: auto 0 0; padding: 40px 20px 18px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.75)); }
-.gallery-item figcaption span { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); font-weight: 700; }
-.gallery-item .slides:has(.slide.active .img.missing) ~ figcaption { background: none; color: var(--ink); position: static; padding: 12px 4px 0; }
+.gallery-item figcaption { z-index: 3; position: absolute; inset: auto 0 0; min-height: 96px; display: flex; flex-direction: column; justify-content: flex-end; padding: 36px 20px 16px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.85) 55%); }
+.gallery-item figcaption strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
+.gallery-item figcaption span { display: block; margin-bottom: 3px; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); font-weight: 700; }
 
 /* ---------- Tim: struktur organisasi ---------- */
 .org-wrap { display: flex; overflow-x: auto; padding: 8px 4px 16px; scrollbar-width: thin; }
@@ -243,7 +244,8 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 
 /* ---------- Responsif ---------- */
 @media (max-width: 960px) {
-  .cards, .gallery, .quotes { grid-template-columns: repeat(2, 1fr); }
+  .cards, .quotes { grid-template-columns: repeat(2, 1fr); }
+  .gallery > .gallery-item { flex-basis: calc((100% - 24px) / 2); }
   .about, .contact { grid-template-columns: 1fr; gap: 32px; }
   .about-media { position: static; max-width: 520px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
@@ -265,7 +267,8 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 }
 @media (max-width: 560px) {
   .vm-row { grid-template-columns: 1fr; }
-  .cards, .gallery, .quotes { grid-template-columns: 1fr; }
+  .cards, .quotes { grid-template-columns: 1fr; }
+  .gallery > .gallery-item { flex-basis: 100%; }
   .stat strong { font-size: 1.6rem; }
   .logo-item { width: 110px; }
   .lb-nav { width: 40px; height: 40px; font-size: 1.4rem; }
