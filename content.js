@@ -469,7 +469,7 @@ window.SITE = {
         "name": "Badan Keamanan Laut Republik Indonesia"
       },
       {
-        "logo": "",
+        "logo": "images/screenshot-2026-10-29-at-08-50-50-mvsw1j69.png?v=mvsw1lex",
         "name": {
           "id": "Nama Pelanggan",
           "en": "UINRaden Fatah Palembang"
