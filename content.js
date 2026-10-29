@@ -467,6 +467,13 @@ window.SITE = {
       {
         "logo": "images/bakamla-mvqg819c.png?v=mvqg83ge",
         "name": "Badan Keamanan Laut Republik Indonesia"
+      },
+      {
+        "logo": "",
+        "name": {
+          "id": "Nama Pelanggan",
+          "en": "UINRaden Fatah Palembang"
+        }
       }
     ]
   }
